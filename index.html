@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flight Dashboard — Emirates Group Roblox OCC</title>
+  <meta name="description" content="Live virtual flight dashboard for Emirates Airlines (Unified) and flydubai, operated by Emirates Group Roblox OCC." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-red: #c20e1a;
+      --brand-red-dark: #8b0b13;
+      --brand-gold: #b5892b;
+      --charcoal: #252525;
+      --ink: #111111;
+      --ink-soft: #333333;
+      --muted: #6b7280;
+      --line: #e5e3df;
+      --bg-page: #f5f3f1;
+      --bg-card: #ffffff;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 16px 32px rgba(0,0,0,0.12);
+      --shadow-subtle: 0 2px 6px rgba(0,0,0,0.18);
+      --status-green: #16a34a;
+      --status-blue: #2563eb;
+      --status-amber: #d97706;
+      --status-red: #dc2626;
+      --status-grey: #4b5563;
+      --airline-emirates: #c20e1a;
+      --airline-flydubai: #ea580c;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-page);
+      color: var(--ink);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: var(--brand-red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Top info ribbon */
+    .top-info {
+      background: #f7f1dc;
+      color: #4b4b4b;
+      font-size: 0.85rem;
+      border-bottom: 1px solid #e0d7b9;
+    }
+    .top-info-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* Red brand strip */
+    .brand-strip {
+      background: var(--brand-red);
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    .brand-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .brand-strip .mini-links a {
+      color: #fff;
+      opacity: 0.9;
+      margin-left: 14px;
+    }
+    .brand-strip .mini-links a:hover { opacity: 1; }
+
+    /* Header / brand */
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 90px;
+      height: 30px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #e51b24, #b3101a);
+      position: relative;
+      box-shadow: var(--shadow-subtle);
+      overflow: hidden;
+    }
+    .brand-logo::after {
+      content: "EGR";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.16em;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-text span:first-child {
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+    .brand-text span:last-child {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .badge-occ {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #bae6fd;
+      background: #eff6ff;
+      color: #1d4ed8;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-occ span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+    .subdomain {
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    /* Layout */
+    .page-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 18px 40px;
+      display: grid;
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+    @media (max-width: 900px) {
+      .page-main {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 16px;
+    }
+    .card h2, .card h3 {
+      margin-top: 0;
+      font-family: Merriweather, Georgia, serif;
+    }
+    .card h2 { font-size: 1.25rem; margin-bottom: 6px; }
+    .card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .card p {
+      margin: 4px 0 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Filters */
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 8px;
+      margin: 10px 0 12px;
+    }
+    @media (max-width: 900px) {
+      .filters {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    @media (max-width: 600px) {
+      .filters {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+    .filter-select,
+    .filter-input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 7px 10px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+    }
+    .filter-select:focus,
+    .filter-input:focus {
+      border-color: var(--brand-red);
+      box-shadow: 0 0 0 1px rgba(194,14,26,0.15);
+    }
+
+    /* Table */
+    .table-wrapper {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    thead {
+      background: #f3f4f6;
+    }
+    th, td {
+      padding: 7px 10px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: #6b7280;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    tbody tr:nth-child(odd) {
+      background: #ffffff;
+    }
+    tbody tr:hover {
+      background: #fef2f2;
+    }
+    .col-number {
+      font-weight: 700;
+      color: #111827;
+    }
+    .airline-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+    .airline-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+    }
+    .airline-dot.emirates { background: var(--airline-emirates); }
+    .airline-dot.flydubai { background: var(--airline-flydubai); }
+
+    .sim-tag {
+      font-size: 0.78rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      color: #4b5563;
+      background: #f9fafb;
+      white-space: nowrap;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .status-pill.clickable {
+      cursor: pointer;
+    }
+    .status-On\ Time {
+      background: #ecfdf5;
+      color: var(--status-green);
+      border-color: #bbf7d0;
+    }
+    .status-Live,
+    .status-Boarding {
+      background: #eff6ff;
+      color: var(--status-blue);
+      border-color: #bfdbfe;
+    }
+    .status-Delayed {
+      background: #fef3c7;
+      color: var(--status-amber);
+      border-color: #fde68a;
+    }
+    .status-Cancelled {
+      background: #fee2e2;
+      color: var(--status-red);
+      border-color: #fecaca;
+    }
+    .status-Landed {
+      background: #f1f5f9;
+      color: var(--status-grey);
+      border-color: #e5e7eb;
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .icon-btn {
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .icon-btn:hover {
+      background: #fee2e2;
+      border-color: #fecaca;
+    }
+
+    .empty-row {
+      text-align: center;
+      padding: 20px 10px;
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
+    .badge-small {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4338ca;
+      border: 1px solid #e0e7ff;
+    }
+
+    /* Sidebar: login + admin form */
+    .form-row {
+      margin-bottom: 10px;
+    }
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #374151;
+    }
+    .form-label span.hint {
+      font-weight: 400;
+      color: #9ca3af;
+      font-size: 0.78rem;
+    }
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      padding: 7px 10px;
+      font-size: 0.86rem;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+    }
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--brand-red);
+      box-shadow: 0 0 0 1px rgba(194,14,26,0.15);
+    }
+    .form-textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: none;
+      background: var(--brand-red);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.86rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+    }
+    .btn-primary:hover {
+      background: var(--brand-red-dark);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f3f4f6;
+      color: #111827;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    .btn-block {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .pill-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fffbeb;
+      border: 1px solid #facc15;
+      color: #92400e;
+      margin-bottom: 8px;
+    }
+
+    .status-banner {
+      margin-top: 10px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+    }
+    .status-banner.success {
+      background: #ecfdf5;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .status-banner.error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .muted { color: var(--muted); }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      background: #222;
+      color: #e5e7eb;
+      margin-top: 24px;
+      font-size: 14px;
+      border-top: 2px solid var(--brand-red);
+    }
+    .footer-main {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 18px 24px 22px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    .footer-main span {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+    .footer-logo-flag {
+      width: 80px;
+      height: 26px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #e51b24, #b40f1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .footer-main {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Light info bar -->
+  <div class="top-info">
+    <div class="top-info-inner">
+      <div>
+        <strong>Virtual operations notice:</strong> This dashboard shows scheduled and active flights for Emirates Airlines (Unified) and flydubai on Roblox.
+      </div>
+      <div class="subdomain">flightdashboard.emiratesgrouproblox.link</div>
+    </div>
+  </div>
+
+  <!-- Red brand strip -->
+  <div class="brand-strip">
+    <div class="brand-strip-inner">
+      <div><strong>Emirates Group Roblox — Flight Dashboard</strong></div>
+      <div class="mini-links">
+        <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"></div>
+        <div class="brand-text">
+          <span>OCC — Operations Control Center</span>
+          <span>Live schedule for Emirates Airlines (Unified) & flydubai</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="badge-occ">
+          <span class="dot"></span>
+          <span>OCC Systems Online</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="page-main">
+    <!-- Flights card -->
+    <section class="card" aria-label="Live flights">
+      <h2>Live operations</h2>
+      <p>View and filter all scheduled virtual flights. OCC staff can update this schedule in real time.</p>
+
+      <!-- Filters -->
+      <div class="filters">
+        <div>
+          <div class="filter-label">Airline</div>
+          <select id="filterAirline" class="filter-select">
+            <option value="all">All airlines</option>
+            <option value="Emirates Airlines (Unified)">Emirates Airlines (Unified)</option>
+            <option value="flydubai">flydubai</option>
+          </select>
+        </div>
+        <div>
+          <div class="filter-label">Simulator</div>
+          <select id="filterSim" class="filter-select">
+            <option value="all">All</option>
+            <option value="PTFS">PTFS</option>
+            <option value="ROAV">ROAV</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <div class="filter-label">Status</div>
+          <select id="filterStatus" class="filter-select">
+            <option value="all">All statuses</option>
+            <option value="On Time">On Time</option>
+            <option value="Boarding">Boarding</option>
+            <option value="Live">Live</option>
+            <option value="Landed">Landed</option>
+            <option value="Delayed">Delayed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div>
+          <div class="filter-label">Search</div>
+          <input id="filterSearch" class="filter-input" type="text" placeholder="Flight, airport, gate…">
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrapper" aria-label="Flights table">
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Airline</th>
+              <th>Sim</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Dep</th>
+              <th>Arr</th>
+              <th>Status</th>
+              <th>Gate</th>
+              <th style="text-align:right;">OCC</th>
+            </tr>
+          </thead>
+          <tbody id="flightsBody">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:6px;font-size:0.8rem;color:#9ca3af;">
+        Statuses are updated manually by OCC staff and may be slightly behind live operations.
+      </div>
+    </section>
+
+    <!-- Sidebar: OCC login & tools -->
+    <aside class="card" aria-label="OCC tools">
+      <div id="occLoggedOut">
+        <h2>OCC login</h2>
+        <p>Authorized Operations Control Center staff can log in here to add, edit, and remove flights from the dashboard.</p>
+
+        <div class="pill-note">
+          <span>🔐</span>
+          <span>For internal Emirates Group Roblox staff only.</span>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-row">
+            <label class="form-label" for="occPassword">
+              OCC password
+              <span class="hint">case-sensitive</span>
+            </label>
+            <input id="occPassword" type="password" class="form-input" required>
+          </div>
+          <button type="submit" class="btn-primary btn-block">Login to OCC panel</button>
+        </form>
+        <div id="loginStatus" class="status-banner error" style="display:none;"></div>
+      </div>
+
+      <div id="occLoggedIn" style="display:none;">
+        <h2>OCC tools</h2>
+        <p class="muted">
+          You are logged in to the Flight Dashboard OCC panel. Use this form to create or edit flights.
+        </p>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="badge-small">OCC session active</span>
+          <button type="button" id="btnLogout" class="btn-secondary">Log out</button>
+        </div>
+
+        <form id="flightForm">
+          <input type="hidden" id="editingId" value="">
+          <div class="form-row">
+            <label class="form-label" for="flightNumber">
+              Flight number
+              <span class="hint">e.g. EK123, FZ45</span>
+            </label>
+            <input id="flightNumber" class="form-input" required>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="airlineSelect">
+              Airline
+            </label>
+            <select id="airlineSelect" class="form-select" required>
+              <option value="Emirates Airlines (Unified)">Emirates Airlines (Unified)</option>
+              <option value="flydubai">flydubai</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="simSelect">
+              Simulator
+              <span class="hint">PTFS / ROAV / N/A</span>
+            </label>
+            <select id="simSelect" class="form-select" required>
+              <option value="PTFS">PTFS</option>
+              <option value="ROAV">ROAV</option>
+              <option value="N/A">N/A (for flydubai or generic)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="fromInput">
+              From
+            </label>
+            <input id="fromInput" class="form-input" placeholder="e.g. Greater Rockford International" required>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="toInput">
+              To
+            </label>
+            <input id="toInput" class="form-input" placeholder="e.g. Dubai International" required>
+          </div>
+
+          <div class="form-row" style="display:flex;gap:10px;">
+            <div style="flex:1;">
+              <label class="form-label" for="depInput">
+                Departure (local)
+              </label>
+              <input id="depInput" class="form-input" placeholder="19:55" required>
+            </div>
+            <div style="flex:1;">
+              <label class="form-label" for="arrInput">
+                Arrival (local)
+              </label>
+              <input id="arrInput" class="form-input" placeholder="21:05" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="statusSelect">
+              Status
+            </label>
+            <select id="statusSelect" class="form-select">
+              <option value="On Time">On Time</option>
+              <option value="Boarding">Boarding</option>
+              <option value="Live">Live</option>
+              <option value="Landed">Landed</option>
+              <option value="Delayed">Delayed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="gateInput">
+              Gate / stand
+            </label>
+            <input id="gateInput" class="form-input" placeholder="e.g. A12, Remote, Hangar 3">
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="remarksInput">
+              Remarks
+              <span class="hint">optional</span>
+            </label>
+            <textarea id="remarksInput" class="form-textarea" placeholder="Example: Training flight, Investor event, Delayed due to ATC, etc."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary btn-block" id="btnSaveFlight">Add flight</button>
+          <button type="button" class="btn-secondary btn-block" id="btnCancelEdit" style="margin-top:6px;display:none;">Cancel edit</button>
+        </form>
+
+        <div id="occStatus" class="status-banner success" style="display:none;"></div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-main">
+      <span>
+        © 2025 Emirates Group Roblox. All rights reserved. This dashboard is for virtual roleplay operations only and is
+        <strong>not affiliated with, sponsored by, or endorsed by Emirates or the Emirates Group.</strong>
+      </span>
+      <div class="footer-logo-flag">EGR</div>
+    </div>
+  </footer>
+
+  <script>
+    // ====== CONFIG ======
+    const OCC_PASSWORD = "EmiratesGroupRoblox#OCCOPSFlightDash2025@egr";
+    const STORAGE_KEY_FLIGHTS = "egr_flights_v1";
+    const STORAGE_KEY_OCC = "egr_occ_logged_in";
+
+    const STATUS_SEQUENCE = ["On Time", "Boarding", "Live", "Landed", "Delayed", "Cancelled"];
+
+    // ====== STATE ======
+    let flights = [];
+    let occLoggedIn = false;
+
+    // DOM references
+    const flightsBody = document.getElementById("flightsBody");
+    const filterAirline = document.getElementById("filterAirline");
+    const filterSim = document.getElementById("filterSim");
+    const filterStatus = document.getElementById("filterStatus");
+    const filterSearch = document.getElementById("filterSearch");
+
+    const occLoggedOut = document.getElementById("occLoggedOut");
+    const occLoggedInEl = document.getElementById("occLoggedIn");
+    const loginForm = document.getElementById("loginForm");
+    const loginStatus = document.getElementById("loginStatus");
+    const occStatus = document.getElementById("occStatus");
+
+    const flightForm = document.getElementById("flightForm");
+    const editingIdInput = document.getElementById("editingId");
+    const btnSaveFlight = document.getElementById("btnSaveFlight");
+    const btnCancelEdit = document.getElementById("btnCancelEdit");
+    const btnLogout = document.getElementById("btnLogout");
+
+    // Inputs for form
+    const flightNumberInput = document.getElementById("flightNumber");
+    const airlineSelect = document.getElementById("airlineSelect");
+    const simSelect = document.getElementById("simSelect");
+    const fromInput = document.getElementById("fromInput");
+    const toInput = document.getElementById("toInput");
+    const depInput = document.getElementById("depInput");
+    const arrInput = document.getElementById("arrInput");
+    const statusSelect = document.getElementById("statusSelect");
+    const gateInput = document.getElementById("gateInput");
+    const remarksInput = document.getElementById("remarksInput");
+
+    // ====== Helpers ======
+    function loadFlights() {
+      const stored = localStorage.getItem(STORAGE_KEY_FLIGHTS);
+      if (stored) {
+        try {
+          flights = JSON.parse(stored);
+        } catch {
+          flights = [];
+        }
+      }
+      if (!Array.isArray(flights) || flights.length === 0) {
+        flights = seedFlights();
+        saveFlights();
+      }
+    }
+
+    function saveFlights() {
+      localStorage.setItem(STORAGE_KEY_FLIGHTS, JSON.stringify(flights));
+    }
+
+    function seedFlights() {
+      // Initial example flights (you can change these)
+      return [
+        {
+          id: "1",
+          flightNumber: "EGR101",
+          airline: "Emirates Airlines (Unified)",
+          simulator: "PTFS",
+          from: "Greater Rockford International",
+          to: "Dubai International",
+          depTime: "19:30",
+          arrTime: "21:45",
+          status: "Boarding",
+          gate: "A11",
+          remarks: "PTFS hub departure"
+        },
+        {
+          id: "2",
+          flightNumber: "EGR212",
+          airline: "Emirates Airlines (Unified)",
+          simulator: "ROAV",
+          from: "London Heathrow",
+          to: "Dubai International",
+          depTime: "20:10",
+          arrTime: "23:35",
+          status: "On Time",
+          gate: "B4",
+          remarks: "RO-Aviation event flight"
+        },
+        {
+          id: "3",
+          flightNumber: "FZ45",
+          airline: "flydubai",
+          simulator: "N/A",
+          from: "Dubai International",
+          to: "Izolirani International",
+          depTime: "21:00",
+          arrTime: "22:40",
+          status: "On Time",
+          gate: "F2",
+          remarks: "Codeshare with Emirates Unified"
+        },
+        {
+          id: "4",
+          flightNumber: "EGR330",
+          airline: "Emirates Airlines (Unified)",
+          simulator: "PTFS",
+          from: "Perth International",
+          to: "Dubai International",
+          depTime: "18:15",
+          arrTime: "23:05",
+          status: "Live",
+          gate: "Remote",
+          remarks: "Long-haul training flight"
+        },
+        {
+          id: "5",
+          flightNumber: "FZ92",
+          airline: "flydubai",
+          simulator: "N/A",
+          from: "Dubai International",
+          to: "Larnaca International",
+          depTime: "19:55",
+          arrTime: "22:05",
+          status: "On Time",
+          gate: "C7",
+          remarks: ""
+        }
+      ];
+    }
+
+    function setOCCLoggedIn(value) {
+      occLoggedIn = value;
+      if (value) {
+        occLoggedOut.style.display = "none";
+        occLoggedInEl.style.display = "block";
+        localStorage.setItem(STORAGE_KEY_OCC, "1");
+      } else {
+        occLoggedOut.style.display = "block";
+        occLoggedInEl.style.display = "none";
+        localStorage.removeItem(STORAGE_KEY_OCC);
+      }
+      renderFlights();
+    }
+
+    function showLoginError(msg) {
+      loginStatus.style.display = "block";
+      loginStatus.textContent = msg;
+    }
+
+    function showOCCStatus(type, msg) {
+      occStatus.style.display = "block";
+      occStatus.className = "status-banner " + type;
+      occStatus.textContent = msg;
+      setTimeout(() => { occStatus.style.display = "none"; }, 3500);
+    }
+
+    function resetForm() {
+      editingIdInput.value = "";
+      flightNumberInput.value = "";
+      airlineSelect.value = "Emirates Airlines (Unified)";
+      simSelect.value = "PTFS";
+      fromInput.value = "";
+      toInput.value = "";
+      depInput.value = "";
+      arrInput.value = "";
+      statusSelect.value = "On Time";
+      gateInput.value = "";
+      remarksInput.value = "";
+      btnSaveFlight.textContent = "Add flight";
+      btnCancelEdit.style.display = "none";
+    }
+
+    function startEditFlight(id) {
+      const f = flights.find(fl => fl.id === id);
+      if (!f) return;
+      editingIdInput.value = f.id;
+      flightNumberInput.value = f.flightNumber;
+      airlineSelect.value = f.airline;
+      simSelect.value = f.simulator;
+      fromInput.value = f.from;
+      toInput.value = f.to;
+      depInput.value = f.depTime;
+      arrInput.value = f.arrTime;
+      statusSelect.value = f.status;
+      gateInput.value = f.gate || "";
+      remarksInput.value = f.remarks || "";
+      btnSaveFlight.textContent = "Save changes";
+      btnCancelEdit.style.display = "inline-flex";
+      occStatus.style.display = "none";
+      flightNumberInput.focus();
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
+
+    function deleteFlight(id) {
+      const f = flights.find(fl => fl.id === id);
+      if (!f) return;
+      if (!confirm("Delete flight " + f.flightNumber + " from the dashboard?")) return;
+      flights = flights.filter(fl => fl.id !== id);
+      saveFlights();
+      renderFlights();
+      showOCCStatus("success", "Flight " + f.flightNumber + " removed.");
+    }
+
+    function cycleStatus(id) {
+      const f = flights.find(fl => fl.id === id);
+      if (!f) return;
+      const idx = STATUS_SEQUENCE.indexOf(f.status);
+      const next = STATUS_SEQUENCE[(idx + 1) % STATUS_SEQUENCE.length];
+      f.status = next;
+      saveFlights();
+      renderFlights();
+    }
+
+    // ====== Rendering ======
+    function renderFlights() {
+      flightsBody.innerHTML = "";
+
+      const airlineFilter = filterAirline.value;
+      const simFilter = filterSim.value;
+      const statusFilter = filterStatus.value;
+      const search = filterSearch.value.trim().toLowerCase();
+
+      const filtered = flights.filter(f => {
+        if (airlineFilter !== "all" && f.airline !== airlineFilter) return false;
+        if (simFilter !== "all" && f.simulator !== simFilter) return false;
+        if (statusFilter !== "all" && f.status !== statusFilter) return false;
+
+        if (search) {
+          const hay = (
+            f.flightNumber + " " +
+            f.airline + " " +
+            f.simulator + " " +
+            f.from + " " +
+            f.to + " " +
+            (f.gate || "") + " " +
+            (f.remarks || "")
+          ).toLowerCase();
+          if (!hay.includes(search)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 10;
+        td.className = "empty-row";
+        td.textContent = "No flights match the current filters.";
+        tr.appendChild(td);
+        flightsBody.appendChild(tr);
+        return;
+      }
+
+      filtered.forEach(f => {
+        const tr = document.createElement("tr");
+
+        const tdNum = document.createElement("td");
+        tdNum.className = "col-number";
+        tdNum.textContent = f.flightNumber;
+        tr.appendChild(tdNum);
+
+        const tdAirline = document.createElement("td");
+        const tag = document.createElement("span");
+        tag.className = "airline-tag";
+        const dot = document.createElement("span");
+        dot.className = "airline-dot " + (f.airline === "flydubai" ? "flydubai" : "emirates");
+        tag.appendChild(dot);
+        const label = document.createElement("span");
+        label.textContent = f.airline === "flydubai" ? "flydubai" : "Emirates Unified";
+        tag.appendChild(label);
+        tdAirline.appendChild(tag);
+        tr.appendChild(tdAirline);
+
+        const tdSim = document.createElement("td");
+        const simSpan = document.createElement("span");
+        simSpan.className = "sim-tag";
+        simSpan.textContent = f.simulator;
+        tdSim.appendChild(simSpan);
+        tr.appendChild(tdSim);
+
+        const tdFrom = document.createElement("td");
+        tdFrom.textContent = f.from;
+        tr.appendChild(tdFrom);
+
+        const tdTo = document.createElement("td");
+        tdTo.textContent = f.to;
+        tr.appendChild(tdTo);
+
+        const tdDep = document.createElement("td");
+        tdDep.textContent = f.depTime;
+        tr.appendChild(tdDep);
+
+        const tdArr = document.createElement("td");
+        tdArr.textContent = f.arrTime;
+        tr.appendChild(tdArr);
+
+        const tdStatus = document.createElement("td");
+        const statusSpan = document.createElement("span");
+        statusSpan.className = "status-pill status-" + f.status.replace(" ", "\\ ");
+        statusSpan.textContent = f.status;
+        if (occLoggedIn) {
+          statusSpan.classList.add("clickable");
+          statusSpan.title = "Click to cycle status";
+          statusSpan.addEventListener("click", () => cycleStatus(f.id));
+        }
+        tdStatus.appendChild(statusSpan);
+        tr.appendChild(tdStatus);
+
+        const tdGate = document.createElement("td");
+        tdGate.textContent = f.gate || "—";
+        tr.appendChild(tdGate);
+
+        const tdActions = document.createElement("td");
+        tdActions.style.textAlign = "right";
+        if (occLoggedIn) {
+          const wrapper = document.createElement("div");
+          wrapper.className = "actions";
+
+          const editBtn = document.createElement("button");
+          editBtn.type = "button";
+          editBtn.className = "icon-btn";
+          editBtn.innerHTML = "✏";
+          editBtn.title = "Edit flight";
+          editBtn.addEventListener("click", () => startEditFlight(f.id));
+
+          const delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "icon-btn";
+          delBtn.innerHTML = "🗑";
+          delBtn.title = "Delete flight";
+          delBtn.addEventListener("click", () => deleteFlight(f.id));
+
+          wrapper.appendChild(editBtn);
+          wrapper.appendChild(delBtn);
+          tdActions.appendChild(wrapper);
+        } else {
+          tdActions.textContent = "";
+        }
+        tr.appendChild(tdActions);
+
+        flightsBody.appendChild(tr);
+      });
+    }
+
+    // ====== Event listeners ======
+    [filterAirline, filterSim, filterStatus].forEach(el => {
+      el.addEventListener("change", renderFlights);
+    });
+    filterSearch.addEventListener("input", () => {
+      // small debounce not really needed; simple
+      renderFlights();
+    });
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      loginStatus.style.display = "none";
+      const val = document.getElementById("occPassword").value;
+      if (val === OCC_PASSWORD) {
+        setOCCLoggedIn(true);
+        document.getElementById("occPassword").value = "";
+        showOCCStatus("success", "OCC login successful.");
+      } else {
+        showLoginError("Incorrect OCC password.");
+      }
+    });
+
+    btnLogout.addEventListener("click", () => {
+      if (!confirm("Log out of the OCC tools on this device?")) return;
+      setOCCLoggedIn(false);
+      resetForm();
+    });
+
+    flightForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = editingIdInput.value;
+      const flightNumber = flightNumberInput.value.trim();
+      const airline = airlineSelect.value;
+      const simulator = simSelect.value;
+      const from = fromInput.value.trim();
+      const to = toInput.value.trim();
+      const depTime = depInput.value.trim();
+      const arrTime = arrInput.value.trim();
+      const status = statusSelect.value;
+      const gate = gateInput.value.trim();
+      const remarks = remarksInput.value.trim();
+
+      if (!flightNumber || !from || !to || !depTime || !arrTime) {
+        showOCCStatus("error", "Please fill in all required fields.");
+        return;
+      }
+
+      if (id) {
+        const idx = flights.findIndex(fl => fl.id === id);
+        if (idx !== -1) {
+          flights[idx] = { ...flights[idx], flightNumber, airline, simulator, from, to, depTime, arrTime, status, gate, remarks };
+        }
+        showOCCStatus("success", "Flight " + flightNumber + " updated.");
+      } else {
+        const newFlight = {
+          id: String(Date.now()),
+          flightNumber,
+          airline,
+          simulator,
+          from,
+          to,
+          depTime,
+          arrTime,
+          status,
+          gate,
+          remarks
+        };
+        flights.push(newFlight);
+        showOCCStatus("success", "Flight " + flightNumber + " added to the dashboard.");
+      }
+
+      saveFlights();
+      renderFlights();
+      resetForm();
+    });
+
+    btnCancelEdit.addEventListener("click", () => {
+      resetForm();
+      showOCCStatus("success", "Edit cancelled.");
+    });
+
+    // ====== Init ======
+    loadFlights();
+    renderFlights();
+
+    // Restore OCC session if stored
+    if (localStorage.getItem(STORAGE_KEY_OCC) === "1") {
+      setOCCLoggedIn(true);
+    } else {
+      setOCCLoggedIn(false);
+    }
+  </script>
+</body>
+</html>
