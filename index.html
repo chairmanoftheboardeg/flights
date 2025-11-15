@@ -17,11 +17,12 @@
       --ink: #111111;
       --muted: #6b7280;
       --line: #e5e3df;
-      --bg-page: #f5f3f1;
+      --bg-page-top: #f9fafb;
+      --bg-page-bottom: #f1ede7;
       --bg-card: #ffffff;
       --radius-lg: 18px;
       --radius-md: 12px;
-      --shadow-soft: 0 16px 32px rgba(0,0,0,0.12);
+      --shadow-soft: 0 16px 32px rgba(0,0,0,0.10);
       --shadow-subtle: 0 2px 6px rgba(0,0,0,0.18);
       --status-green: #16a34a;
       --status-blue: #2563eb;
@@ -36,21 +37,21 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: var(--bg-page);
+      background: linear-gradient(180deg, var(--bg-page-top), var(--bg-page-bottom));
       color: var(--ink);
       font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
     a { color: var(--brand-red); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Top info ribbon */
-    .top-info {
-      background: #f7f1dc;
-      color: #4b4b4b;
+    /* OCC announcement banner (top) */
+    .ann-banner {
+      background: #fff7cc;
+      border-bottom: 1px solid #facc15;
       font-size: 0.85rem;
-      border-bottom: 1px solid #e0d7b9;
+      color: #854d0e;
     }
-    .top-info-inner {
+    .ann-banner-inner {
       max-width: 1200px;
       margin: 0 auto;
       padding: 6px 16px;
@@ -58,6 +59,21 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+      flex-wrap: wrap;
+    }
+    .ann-label {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+    .ann-text {
+      font-weight: 500;
+    }
+    .ann-time {
+      color: #78350f;
+      font-size: 0.8rem;
+      white-space: nowrap;
     }
 
     /* Red brand strip */
@@ -84,17 +100,21 @@
 
     /* Header / brand */
     .topbar {
-      background: #ffffff;
+      background: rgba(255,255,255,0.9);
       border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 30;
     }
     .topbar-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 14px 18px 10px;
+      padding: 12px 18px 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .brand {
@@ -138,7 +158,7 @@
     .topbar-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 16px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
@@ -164,14 +184,26 @@
       color: #6b7280;
     }
 
-    /* Main layout: vertical */
+    .dubai-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 0.78rem;
+      color: #4b5563;
+    }
+    .dubai-chip-main {
+      font-weight: 600;
+      font-size: 0.86rem;
+    }
+
+    /* Main layout */
     .page-main {
       max-width: 1200px;
       margin: 0 auto;
       padding: 18px 18px 40px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     .card {
@@ -193,12 +225,88 @@
       color: var(--muted);
     }
 
+    /* Overview card */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    @media (max-width: 900px) {
+      .overview-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    @media (max-width: 600px) {
+      .overview-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+    .overview-block {
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      background: #f9fafb;
+    }
+    .overview-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    .time-main {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .time-sub {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .overview-number {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .overview-sub {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Status legend */
+    .status-legend {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.76rem;
+      color: #6b7280;
+    }
+    .status-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+    .dot-green { background: var(--status-green); }
+    .dot-blue { background: var(--status-blue); }
+    .dot-amber { background: var(--status-amber); }
+    .dot-red { background: var(--status-red); }
+    .dot-grey { background: var(--status-grey); }
+
     /* Filters */
     .filters {
       display: grid;
       grid-template-columns: repeat(4, minmax(0,1fr));
       gap: 8px;
-      margin: 10px 0 12px;
+      margin: 14px 0 12px;
     }
     @media (max-width: 900px) {
       .filters { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -523,13 +631,16 @@
 </head>
 <body>
 
-  <!-- Light info bar -->
-  <div class="top-info">
-    <div class="top-info-inner">
+  <!-- OCC announcement banner -->
+  <div class="ann-banner">
+    <div class="ann-banner-inner">
       <div>
-        <strong>Virtual operations notice:</strong> This dashboard shows scheduled and active flights for Emirates Airlines (Unified) and flydubai on Roblox.
+        <span class="ann-label">OCC announcement</span>
+        <span id="annText" class="ann-text">No major disruptions reported.</span>
       </div>
-      <div class="subdomain">flightdashboard.emiratesgrouproblox.link</div>
+      <div class="ann-time">
+        Dubai time: <span id="dubaiTimeTop">--:--</span>
+      </div>
     </div>
   </div>
 
@@ -554,6 +665,10 @@
         </div>
       </div>
       <div class="topbar-right">
+        <div class="dubai-chip">
+          <span class="dubai-chip-main" id="dubaiTimeHeader">--:--</span>
+          <span>Local time in Dubai (GMT+4)</span>
+        </div>
         <div class="badge-occ">
           <span class="dot"></span>
           <span>OCC Systems Online</span>
@@ -564,7 +679,54 @@
 
   <!-- MAIN -->
   <main class="page-main">
-    <!-- Flights card (always on top, full width) -->
+    <!-- Overview -->
+    <section class="card" aria-label="Operations overview">
+      <h2>Operations overview</h2>
+      <p>Quick view of time, activity, and OCC updates for Emirates Group Roblox virtual operations.</p>
+
+      <div class="overview-grid">
+        <div class="overview-block">
+          <div class="overview-title">Time</div>
+          <div class="time-main" id="dubaiTimeCard">--:--</div>
+          <div class="time-sub" id="localTimeText">Your local time: --:--</div>
+        </div>
+        <div class="overview-block">
+          <div class="overview-title">Flights on dashboard</div>
+          <div class="overview-number" id="statTotal">0</div>
+          <div class="overview-sub">All airlines / simulators</div>
+        </div>
+        <div class="overview-block">
+          <div class="overview-title">Live &amp; boarding</div>
+          <div class="overview-number" id="statActive">0</div>
+          <div class="overview-sub">Live or boarding flights</div>
+        </div>
+        <div class="overview-block">
+          <div class="overview-title">Delays &amp; cancellations</div>
+          <div class="overview-number" id="statDisrupted">0</div>
+          <div class="overview-sub" id="lastUpdatedText">Last OCC update: —</div>
+        </div>
+      </div>
+
+      <div class="status-legend" aria-label="Status legend">
+        <div class="status-legend-item">
+          <span class="status-dot dot-green"></span> On Time
+        </div>
+        <div class="status-legend-item">
+          <span class="status-dot dot-blue"></span> Boarding / Live
+        </div>
+        <div class="status-legend-item">
+          <span class="status-dot dot-grey"></span> Landed
+        </div>
+        <div class="status-legend-item">
+          <span class="status-dot dot-amber"></span> Delayed
+        </div>
+        <div class="status-legend-item">
+          <span class="status-dot dot-red"></span> Cancelled
+        </div>
+      </div>
+    </section>
+
+    <!-- Flights card -->
     <section class="card" aria-label="Live flights">
       <h2>Live operations</h2>
       <p>View and filter all scheduled virtual flights. OCC staff can update this schedule in real time from the panel at the bottom of this page.</p>
@@ -638,7 +800,7 @@
       <!-- Logged out view -->
       <div id="occLoggedOut">
         <h2>OCC login</h2>
-        <p>Authorized Operations Control Center staff can log in here to add, edit, and remove flights from the dashboard above.</p>
+        <p>Authorized Operations Control Center staff can log in here to add, edit, and remove flights from the dashboard above, and to update the OCC announcement.</p>
 
         <div class="pill-note">
           <span>🔐</span>
@@ -670,6 +832,19 @@
           <button type="button" id="btnLogout" class="btn-secondary">Log out</button>
         </div>
 
+        <!-- Announcement editor -->
+        <div class="form-row">
+          <label class="form-label" for="announcementInput">
+            OCC announcement
+            <span class="hint">shown in yellow banner at top</span>
+          </label>
+          <input id="announcementInput" class="form-input" placeholder="Example: Expect minor delays due to training operations.">
+        </div>
+        <button type="button" id="btnSaveAnnouncement" class="btn-secondary" style="margin-bottom:14px;">Update announcement</button>
+
+        <hr style="border:none;border-top:1px solid #e5e7eb;margin:10px 0 14px;">
+
+        <!-- Flight form -->
         <form id="flightForm">
           <input type="hidden" id="editingId" value="">
           <div class="form-row">
@@ -771,30 +946,46 @@
     const OCC_PASSWORD = "EmiratesGroupRoblox#OCCOPSFlightDash2025@egr";
     const STORAGE_KEY_FLIGHTS = "egr_flights_v1";
     const STORAGE_KEY_OCC = "egr_occ_logged_in";
+    const STORAGE_KEY_ANN = "egr_ops_announcement";
+    const STORAGE_KEY_LAST_UPDATED = "egr_flights_last_updated";
     const STATUS_SEQUENCE = ["On Time", "Boarding", "Live", "Landed", "Delayed", "Cancelled"];
 
     // ====== STATE ======
     let flights = [];
     let occLoggedIn = false;
+    let lastUpdatedISO = null;
+    let opsAnnouncement = "No major disruptions reported.";
 
-    // DOM references
+    // DOM references: overview & banner
+    const dubaiTimeTop = document.getElementById("dubaiTimeTop");
+    const dubaiTimeHeader = document.getElementById("dubaiTimeHeader");
+    const dubaiTimeCard = document.getElementById("dubaiTimeCard");
+    const localTimeText = document.getElementById("localTimeText");
+    const annText = document.getElementById("annText");
+    const statTotal = document.getElementById("statTotal");
+    const statActive = document.getElementById("statActive");
+    const statDisrupted = document.getElementById("statDisrupted");
+    const lastUpdatedText = document.getElementById("lastUpdatedText");
+
+    // DOM references: flights
     const flightsBody = document.getElementById("flightsBody");
     const filterAirline = document.getElementById("filterAirline");
     const filterSim = document.getElementById("filterSim");
     const filterStatus = document.getElementById("filterStatus");
     const filterSearch = document.getElementById("filterSearch");
 
+    // DOM references: OCC
     const occLoggedOut = document.getElementById("occLoggedOut");
     const occLoggedInEl = document.getElementById("occLoggedIn");
     const loginForm = document.getElementById("loginForm");
     const loginStatus = document.getElementById("loginStatus");
     const occStatus = document.getElementById("occStatus");
+    const btnLogout = document.getElementById("btnLogout");
 
     const flightForm = document.getElementById("flightForm");
     const editingIdInput = document.getElementById("editingId");
     const btnSaveFlight = document.getElementById("btnSaveFlight");
     const btnCancelEdit = document.getElementById("btnCancelEdit");
-    const btnLogout = document.getElementById("btnLogout");
 
     const flightNumberInput = document.getElementById("flightNumber");
     const airlineSelect = document.getElementById("airlineSelect");
@@ -807,7 +998,31 @@
     const gateInput = document.getElementById("gateInput");
     const remarksInput = document.getElementById("remarksInput");
 
-    // ====== Helpers ======
+    const announcementInput = document.getElementById("announcementInput");
+    const btnSaveAnnouncement = document.getElementById("btnSaveAnnouncement");
+
+    // ====== Time helpers ======
+    function updateTimeDisplays() {
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const dubaiDate = new Date(utc + 4 * 3600000); // UTC+4
+
+      const optionsTime = { hour: "2-digit", minute: "2-digit" };
+      const optionsFull = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+
+      const dubaiStr = dubaiDate.toLocaleTimeString([], optionsTime);
+      const dubaiStrLong = dubaiDate.toLocaleTimeString([], optionsFull);
+      const localStr = now.toLocaleTimeString([], optionsTime);
+
+      dubaiTimeTop.textContent = dubaiStrLong;
+      dubaiTimeHeader.textContent = dubaiStr;
+      dubaiTimeCard.textContent = dubaiStrLong;
+      localTimeText.textContent = "Your local time: " + localStr;
+    }
+
+    setInterval(updateTimeDisplays, 1000);
+
+    // ====== Storage helpers ======
     function loadFlights() {
       const stored = localStorage.getItem(STORAGE_KEY_FLIGHTS);
       if (stored) {
@@ -818,10 +1033,27 @@
           flights = [];
         }
       }
+      const lu = localStorage.getItem(STORAGE_KEY_LAST_UPDATED);
+      if (lu) lastUpdatedISO = lu;
+
+      const annStored = localStorage.getItem(STORAGE_KEY_ANN);
+      if (annStored) opsAnnouncement = annStored;
+      annText.textContent = opsAnnouncement;
+      if (announcementInput) announcementInput.value = opsAnnouncement;
     }
 
     function saveFlights() {
       localStorage.setItem(STORAGE_KEY_FLIGHTS, JSON.stringify(flights));
+      lastUpdatedISO = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY_LAST_UPDATED, lastUpdatedISO);
+      updateStats();
+    }
+
+    function saveAnnouncement() {
+      opsAnnouncement = announcementInput.value.trim() || "No major disruptions reported.";
+      localStorage.setItem(STORAGE_KEY_ANN, opsAnnouncement);
+      annText.textContent = opsAnnouncement;
+      showOCCStatus("success", "OCC announcement updated.");
     }
 
     function setOCCLoggedIn(value) {
@@ -830,6 +1062,7 @@
         occLoggedOut.style.display = "none";
         occLoggedInEl.style.display = "block";
         localStorage.setItem(STORAGE_KEY_OCC, "1");
+        announcementInput.value = opsAnnouncement;
       } else {
         occLoggedOut.style.display = "block";
         occLoggedInEl.style.display = "none";
@@ -906,6 +1139,25 @@
       renderFlights();
     }
 
+    // ====== Stats ======
+    function updateStats() {
+      const total = flights.length;
+      const active = flights.filter(f => f.status === "Live" || f.status === "Boarding").length;
+      const disrupted = flights.filter(f => f.status === "Delayed" || f.status === "Cancelled").length;
+
+      statTotal.textContent = total;
+      statActive.textContent = active;
+      statDisrupted.textContent = disrupted;
+
+      if (lastUpdatedISO) {
+        const d = new Date(lastUpdatedISO);
+        const str = d.toLocaleString([], { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" });
+        lastUpdatedText.textContent = "Last OCC update: " + str;
+      } else {
+        lastUpdatedText.textContent = "Last OCC update: —";
+      }
+    }
+
     // ====== Rendering ======
     function renderFlights() {
       flightsBody.innerHTML = "";
@@ -942,6 +1194,7 @@
         td.textContent = "No flights in the dashboard yet. OCC staff can add flights from the panel below.";
         tr.appendChild(td);
         flightsBody.appendChild(tr);
+        updateStats();
         return;
       }
 
@@ -1034,6 +1287,8 @@
 
         flightsBody.appendChild(tr);
       });
+
+      updateStats();
     }
 
     // ====== Event listeners ======
@@ -1115,9 +1370,13 @@
       showOCCStatus("success", "Edit cancelled.");
     });
 
+    btnSaveAnnouncement.addEventListener("click", saveAnnouncement);
+
     // ====== Init ======
     loadFlights();
+    updateTimeDisplays();
     renderFlights();
+    updateStats();
 
     // Restore OCC session if stored
     if (localStorage.getItem(STORAGE_KEY_OCC) === "1") {
