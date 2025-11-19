@@ -12,119 +12,94 @@
     :root {
       --brand-red: #c20e1a;
       --brand-red-dark: #8b0b13;
-      --brand-gold: #b5892b;
-      --charcoal: #252525;
-      --ink: #111111;
-      --muted: #6b7280;
-      --line: #e5e3df;
-      --bg-page-top: #fdf5f3;
-      --bg-page-bottom: #f1ede7;
+      --brand-gold: #d1a23a;
+      --bg-page: #f4f4f6;
       --bg-card: #ffffff;
+      --line: #e5e7eb;
+      --ink: #111827;
+      --muted: #6b7280;
       --radius-lg: 18px;
       --radius-md: 12px;
-      --shadow-soft: 0 16px 32px rgba(0,0,0,0.12);
-      --shadow-subtle: 0 2px 6px rgba(0,0,0,0.18);
+      --shadow-soft: 0 18px 40px rgba(15,23,42,0.14);
+      --shadow-subtle: 0 4px 12px rgba(15,23,42,0.10);
+
       --status-green: #16a34a;
       --status-blue: #2563eb;
       --status-amber: #d97706;
       --status-red: #dc2626;
       --status-grey: #4b5563;
+
       --airline-emirates: #c20e1a;
-      --airline-flydubai: #ea580c;
+      --airline-flydubai: #f97316;
     }
 
     * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       padding: 0;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 55%),
-        radial-gradient(circle at bottom right, #fdf2f2, transparent 55%),
-        linear-gradient(180deg, var(--bg-page-top), var(--bg-page-bottom));
-      color: var(--ink);
       font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #fef2f2 0, transparent 55%),
+        radial-gradient(circle at bottom right, #e0f2fe 0, transparent 55%),
+        var(--bg-page);
+      color: var(--ink);
+      min-height: 100vh;
     }
+
     a { color: var(--brand-red); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* OCC announcement banner (top) */
-    .ann-banner {
-      background: #fff7cc;
+    /* Top alert (optional OCC notice) */
+    .top-alert {
+      background: #fef9c3;
       border-bottom: 1px solid #facc15;
       font-size: 0.85rem;
-      color: #854d0e;
+      color: #78350f;
     }
-    .ann-banner-inner {
+    .top-alert-inner {
       max-width: 1200px;
       margin: 0 auto;
       padding: 6px 16px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
-    .ann-label {
+    .top-alert-label {
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      font-size: 0.78rem;
-    }
-    .ann-text { font-weight: 500; }
-    .ann-time {
-      color: #78350f;
-      font-size: 0.8rem;
-      white-space: nowrap;
+      margin-right: 8px;
     }
 
-    /* Red brand strip */
-    .brand-strip {
+    /* Red header bar */
+    .header {
       background: var(--brand-red);
       color: #fff;
-      font-size: 0.9rem;
-    }
-    .brand-strip-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 6px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .brand-strip .mini-links a {
-      color: #fff;
-      opacity: 0.9;
-      margin-left: 14px;
-    }
-    .brand-strip .mini-links a:hover { opacity: 1; }
-
-    /* Header / brand */
-    .topbar {
-      background: rgba(255,255,255,0.92);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       position: sticky;
       top: 0;
-      z-index: 30;
+      z-index: 40;
     }
-    .topbar-inner {
+    .header-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 12px 18px 10px;
+      padding: 10px 18px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
       flex-wrap: wrap;
     }
-    .brand {
+    .brand-block {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .brand-logo {
-      width: 90px;
+      width: 96px;
       height: 30px;
       border-radius: 6px;
       background: linear-gradient(180deg, #e51b24, #b3101a);
@@ -139,14 +114,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
       font-weight: 800;
-      font-size: 0.9rem;
       letter-spacing: 0.16em;
+      font-size: 0.9rem;
     }
     .brand-text {
       display: flex;
       flex-direction: column;
+      gap: 2px;
     }
     .brand-text span:first-child {
       font-weight: 700;
@@ -154,25 +129,35 @@
     }
     .brand-text span:last-child {
       font-size: 0.8rem;
-      color: var(--muted);
+      opacity: 0.9;
     }
-    .topbar-right {
+
+    .header-right {
       display: flex;
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
-    .badge-occ {
+    .time-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       font-size: 0.78rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid #bae6fd;
-      background: #eff6ff;
-      color: #1d4ed8;
+    }
+    .time-chip-main {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .badge-occ {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-size: 0.78rem;
+      background: rgba(255,255,255,0.12);
     }
     .badge-occ span.dot {
       width: 8px;
@@ -181,190 +166,114 @@
       background: #22c55e;
     }
 
-    .dubai-chip {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: flex-end;
-      font-size: 0.78rem;
-      color: #4b5563;
-    }
-    .dubai-chip-main {
-      font-weight: 600;
-      font-size: 0.86rem;
-    }
-
     /* Main layout */
     .page-main {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 18px 18px 40px;
+      padding: 18px 18px 32px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
-    .card {
-      background: radial-gradient(circle at top right, #fff7f7, #ffffff 55%);
+    /* Schedule header (date strip + counts) */
+    .schedule-header-card {
+      background: var(--bg-card);
       border-radius: var(--radius-lg);
-      border: 1px solid var(--line);
+      border: 1px solid #e5e7eb;
       box-shadow: var(--shadow-soft);
-      padding: 16px 16px 18px;
+      padding: 14px 16px 12px;
     }
-    .card h2, .card h3 {
-      margin-top: 0;
-      font-family: Merriweather, Georgia, serif;
-    }
-    .card h2 { font-size: 1.3rem; margin-bottom: 6px; }
-    .card h3 { font-size: 1rem; margin-bottom: 6px; }
-    .card p {
-      margin: 4px 0 10px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    /* Hero feel in overview card */
-    .overview-header {
+    .schedule-header-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 10px;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .overview-title-block {
+    .schedule-header-title {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
-    .overview-subtitle {
+    .schedule-header-title h1 {
+      margin: 0;
+      font-family: Merriweather, Georgia, serif;
+      font-size: 1.4rem;
+    }
+    .schedule-subtitle {
       font-size: 0.85rem;
       color: var(--muted);
     }
-    .badge-subdomain {
-      font-size: 0.75rem;
-      padding: 3px 9px;
+
+    .date-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 0.8rem;
+    }
+    .date-chip-main {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .date-chip-tag {
+      margin-top: 3px;
+      padding: 2px 7px;
       border-radius: 999px;
       background: #fee2e2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Overview card content */
-    .overview-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0,1fr));
-      gap: 12px;
-    }
-    @media (max-width: 900px) {
-      .overview-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    }
-    @media (max-width: 600px) {
-      .overview-grid { grid-template-columns: minmax(0,1fr); }
-    }
-    .overview-block {
-      border-radius: 14px;
-      border: 1px solid #e5e7eb;
-      padding: 10px 12px;
-      background: #f9fafb;
-    }
-    .overview-title {
-      font-size: 0.78rem;
+      color: #b91c1c;
+      font-size: 0.75rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
-    .time-main {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .time-sub {
-      font-size: 0.78rem;
-      color: #6b7280;
-      margin-top: 2px;
-    }
-    .overview-number {
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
-    .overview-sub {
-      font-size: 0.8rem;
-      color: #6b7280;
     }
 
-    /* Status legend */
-    .status-legend {
-      margin-top: 12px;
+    .schedule-summary {
+      margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      font-size: 0.76rem;
-      color: #6b7280;
+      font-size: 0.78rem;
+      color: var(--muted);
     }
-    .status-legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
+    .summary-pill {
+      padding: 4px 10px;
       border-radius: 999px;
-      background: #f3f4f6;
+      background: #f9fafb;
       border: 1px solid #e5e7eb;
     }
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-    }
-    .dot-green { background: var(--status-green); }
-    .dot-blue { background: var(--status-blue); }
-    .dot-amber { background: var(--status-amber); }
-    .dot-red { background: var(--status-red); }
-    .dot-grey { background: var(--status-grey); }
 
-    /* Flights + filters layout */
-    .flights-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 1.35fr);
-      gap: 16px;
-    }
-    @media (max-width: 900px) {
-      .flights-layout {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-
-    .filters {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
+    /* Filters row */
+    .filter-row {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
-      margin: 14px 0 12px;
     }
-    @media (max-width: 900px) {
-      .filters { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    }
-    @media (max-width: 600px) {
-      .filters { grid-template-columns: minmax(0,1fr); }
+    .filter-group {
+      min-width: 140px;
     }
     .filter-label {
       font-size: 0.75rem;
-      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.09em;
       color: #6b7280;
       margin-bottom: 2px;
+      font-weight: 600;
     }
     .filter-select,
     .filter-input {
       width: 100%;
       border-radius: 999px;
-      border: 1px solid var(--line);
-      padding: 7px 10px;
+      border: 1px solid #e5e7eb;
+      padding: 7px 11px;
       font-size: 0.85rem;
       font-family: inherit;
       outline: none;
-      background: #fff;
+      background: #ffffff;
     }
     .filter-select:focus,
     .filter-input:focus {
@@ -372,163 +281,267 @@
       box-shadow: 0 0 0 1px rgba(194,14,26,0.15);
     }
 
-    /* Table */
-    .table-wrapper {
-      border-radius: var(--radius-md);
-      border: 1px solid var(--line);
-      overflow: hidden;
+    /* Flight card list */
+    .flights-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.86rem;
-    }
-    thead { background: #f3f4f6; }
-    th, td {
-      padding: 7px 10px;
-      text-align: left;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    th {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-      color: #6b7280;
+    .flights-section-title {
       font-weight: 600;
-      white-space: nowrap;
-    }
-    tbody tr:nth-child(even) { background: #f9fafb; }
-    tbody tr:nth-child(odd) { background: #ffffff; }
-    tbody tr:hover { background: #fef2f2; }
-    .col-number {
-      font-weight: 700;
-      color: #111827;
-    }
-    .airline-tag {
-      display: inline-flex;
+      font-size: 0.9rem;
+      color: var(--muted);
+      display: flex;
       align-items: center;
+      gap: 6px;
+    }
+    .flights-section-title span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--brand-red);
+    }
+
+    .empty-state {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px dashed #d1d5db;
+      padding: 18px 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .flight-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid #e5e7eb;
+      box-shadow: var(--shadow-soft);
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 3fr) minmax(0, 1.8fr);
+      gap: 14px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .flight-card {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: flex-start;
+      }
+    }
+
+    .flight-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .airline-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-subtle);
+    }
+    .airline-logo.emirates { background: var(--airline-emirates); }
+    .airline-logo.flydubai { background: var(--airline-flydubai); }
+
+    .flight-left-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .flight-number {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .flight-airline {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .flight-tags {
+      display: flex;
+      flex-wrap: wrap;
       gap: 4px;
-      font-size: 0.78rem;
-      padding: 3px 8px;
+      margin-top: 2px;
+    }
+    .chip {
+      font-size: 0.75rem;
+      padding: 2px 7px;
       border-radius: 999px;
       border: 1px solid #e5e7eb;
       background: #f9fafb;
-    }
-    .airline-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-    }
-    .airline-dot.emirates { background: var(--airline-emirates); }
-    .airline-dot.flydubai { background: var(--airline-flydubai); }
-
-    .sim-tag {
-      font-size: 0.78rem;
-      padding: 3px 7px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
       color: #4b5563;
-      background: #f9fafb;
-      white-space: nowrap;
     }
 
+    .flight-middle {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+    }
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .time-main {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .time-city {
+      font-size: 0.9rem;
+    }
+    .time-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .timeline {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .timeline-arrow {
+      width: 80px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e5e7eb, #c20e1a, #e5e7eb);
+      margin: 4px auto 6px;
+      position: relative;
+    }
+    .timeline-arrow::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: -4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 2px solid #c20e1a;
+      background: #fff;
+    }
+
+    .flight-right {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-end;
+    }
     .status-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 3px 9px;
+      padding: 4px 10px;
       border-radius: 999px;
       font-size: 0.78rem;
       font-weight: 600;
       border: 1px solid transparent;
-      cursor: default;
+      cursor: pointer;
       white-space: nowrap;
     }
-    .status-pill.clickable { cursor: pointer; }
-
     .status-On\ Time {
       background: #ecfdf5;
-      color: var(--status-green);
       border-color: #bbf7d0;
+      color: var(--status-green);
     }
-    .status-Live,
-    .status-Boarding {
+    .status-Boarding,
+    .status-Live {
       background: #eff6ff;
-      color: var(--status-blue);
       border-color: #bfdbfe;
+      color: var(--status-blue);
     }
     .status-Delayed {
       background: #fef3c7;
-      color: var(--status-amber);
       border-color: #fde68a;
+      color: var(--status-amber);
     }
     .status-Cancelled {
       background: #fee2e2;
-      color: var(--status-red);
       border-color: #fecaca;
+      color: var(--status-red);
     }
     .status-Landed {
       background: #f1f5f9;
-      color: var(--status-grey);
       border-color: #e5e7eb;
+      color: var(--status-grey);
     }
 
-    .actions {
+    .gate-info {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .gate-info span {
+      font-weight: 600;
+      color: #111827;
+    }
+    .remarks {
+      font-size: 0.78rem;
+      color: var(--muted);
+      max-width: 260px;
+      text-align: right;
+    }
+
+    .card-actions {
       display: flex;
       gap: 6px;
-      align-items: center;
-      justify-content: flex-end;
+      margin-top: 4px;
     }
-    .action-btn {
+    .btn-small {
       border-radius: 999px;
       border: 1px solid #e5e7eb;
-      background: #ffffff;
+      background: #f9fafb;
       padding: 2px 8px;
-      font-size: 0.75rem;
-      cursor: pointer;
+      font-size: 0.76rem;
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      cursor: pointer;
     }
-    .action-btn span.icon { font-size: 0.8rem; }
-    .action-btn:hover {
+    .btn-small:hover {
       background: #fee2e2;
       border-color: #fecaca;
     }
 
-    .empty-row {
-      text-align: center;
-      padding: 20px 10px;
-      color: #9ca3af;
+    /* OCC card */
+    .occ-card {
+      margin-top: 8px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid #e5e7eb;
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 18px;
+    }
+    .occ-card h2 {
+      margin: 0 0 4px;
+      font-family: Merriweather, Georgia, serif;
+      font-size: 1.3rem;
+    }
+    .occ-card p {
+      margin: 0 0 10px;
       font-size: 0.9rem;
+      color: var(--muted);
     }
 
-    .badge-small {
-      font-size: 0.72rem;
-      padding: 2px 7px;
+    .pill-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
       border-radius: 999px;
-      background: #eef2ff;
-      color: #4338ca;
-      border: 1px solid #e0e7ff;
+      background: #fffbeb;
+      border: 1px solid #facc15;
+      color: #92400e;
+      font-size: 0.78rem;
+      margin-bottom: 10px;
     }
 
-    /* Sidebar card */
-    .side-card-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-    .side-list {
-      list-style: none;
-      margin: 8px 0 0;
-      padding: 0;
-      font-size: 0.82rem;
-      color: #6b7280;
-    }
-    .side-list li {
-      margin-bottom: 6px;
-    }
-
-    /* OCC panel */
     .form-row { margin-bottom: 10px; }
     .form-label {
       display: flex;
@@ -537,7 +550,7 @@
       font-size: 0.85rem;
       font-weight: 600;
       margin-bottom: 4px;
-      color: #374151;
+      color: #111827;
     }
     .form-label span.hint {
       font-weight: 400;
@@ -549,7 +562,7 @@
     .form-textarea {
       width: 100%;
       border-radius: 10px;
-      border: 1px solid var(--line);
+      border: 1px solid #e5e7eb;
       padding: 7px 10px;
       font-size: 0.86rem;
       font-family: inherit;
@@ -597,27 +610,26 @@
       cursor: pointer;
     }
     .btn-secondary:hover { background: #e5e7eb; }
-
     .btn-block { width: 100%; justify-content: center; }
 
-    .pill-note {
+    .badge-small {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.78rem;
-      padding: 6px 10px;
+      padding: 4px 9px;
       border-radius: 999px;
-      background: #fffbeb;
-      border: 1px solid #facc15;
-      color: #92400e;
-      margin-bottom: 8px;
+      font-size: 0.78rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
     }
 
     .status-banner {
       margin-top: 10px;
-      padding: 9px 10px;
+      padding: 8px 10px;
       border-radius: 10px;
       font-size: 0.8rem;
+      display: none;
     }
     .status-banner.success {
       background: #ecfdf5;
@@ -630,46 +642,39 @@
       border: 1px solid #fecaca;
     }
 
-    .muted { color: var(--muted); }
-
     /* Footer */
     footer {
-      width: 100%;
-      background: #222;
-      color: #e5e7eb;
-      margin-top: 24px;
-      font-size: 14px;
-      border-top: 2px solid var(--brand-red);
-    }
-    .footer-main {
-      max-width: 1260px;
-      margin: 0 auto;
-      padding: 18px 24px 22px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-    .footer-main span {
-      font-size: 0.8rem;
+      background: #111827;
       color: #9ca3af;
+      border-top: 2px solid var(--brand-red);
+      margin-top: 26px;
+      font-size: 0.8rem;
     }
-    .footer-logo-flag {
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-logo {
       width: 80px;
       height: 26px;
       border-radius: 4px;
-      background: linear-gradient(180deg, #e51b24, #b40f1a);
+      background: linear-gradient(180deg, #e51b24, #b3101a);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 11px;
-      letter-spacing: 0.15em;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
       color: #fff;
     }
     @media (max-width: 600px) {
-      .footer-main {
+      .footer-inner {
         flex-direction: column;
         align-items: flex-start;
       }
@@ -677,44 +682,31 @@
   </style>
 </head>
 <body>
-
-  <!-- OCC announcement banner -->
-  <div class="ann-banner">
-    <div class="ann-banner-inner">
+  <!-- OCC notice (you can change text here) -->
+  <div class="top-alert">
+    <div class="top-alert-inner">
       <div>
-        <span class="ann-label">OCC announcement</span>
-        <span id="annText" class="ann-text">No major disruptions reported.</span>
+        <span class="top-alert-label">Operations Control Center</span>
+        <span id="occNotice">No major disruptions reported.</span>
       </div>
-      <div class="ann-time">
-        Dubai time: <span id="dubaiTimeTop">--:--</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Red brand strip -->
-  <div class="brand-strip">
-    <div class="brand-strip-inner">
-      <div><strong>Emirates Group Roblox — Flight Dashboard</strong></div>
-      <div class="mini-links">
-        <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main website</a>
-      </div>
+      <div>For live status, refresh this page during operations.</div>
     </div>
   </div>
 
   <!-- Header -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand-block">
         <div class="brand-logo" aria-hidden="true"></div>
         <div class="brand-text">
-          <span>Flight Operations Control Center</span>
+          <span>Emirates Group Roblox Flight Dashboard</span>
           <span>Emirates Airlines (Unified) · flydubai · PTFS · RO-Aviation</span>
         </div>
       </div>
-      <div class="topbar-right">
-        <div class="dubai-chip">
-          <span class="dubai-chip-main" id="dubaiTimeHeader">--:--</span>
-          <span>Local time in Dubai (GMT+4)</span>
+      <div class="header-right">
+        <div class="time-chip">
+          <span class="time-chip-main" id="dubaiTimeHeader">--:--</span>
+          <span>Dubai local time (GMT+4)</span>
         </div>
         <div class="badge-occ">
           <span class="dot"></span>
@@ -724,165 +716,83 @@
     </div>
   </header>
 
-  <!-- MAIN -->
   <main class="page-main">
-    <!-- Overview / hero -->
-    <section class="card" aria-label="Operations overview">
-      <div class="overview-header">
-        <div class="overview-title-block">
-          <h2>Live Emirates Group Roblox operations</h2>
-          <div class="overview-subtitle">
-            Monitor scheduled flights across Emirates Airlines (Unified) and flydubai in PTFS and RO-Aviation.
+    <!-- Schedule header card (date + filters + summary) -->
+    <section class="schedule-header-card">
+      <div class="schedule-header-top">
+        <div class="schedule-header-title">
+          <h1>Today’s virtual schedule</h1>
+          <div class="schedule-subtitle">
+            All scheduled flights for Emirates Airlines (Unified) and flydubai across PTFS and RO-Aviation.
           </div>
         </div>
-        <div class="badge-subdomain">
-          flightdashboard.emiratesgrouproblox.link
+        <div class="date-chip">
+          <span class="date-chip-main" id="todayDateMain">Wednesday, 19 Nov</span>
+          <span class="date-chip-tag">Today</span>
         </div>
       </div>
 
-      <div class="overview-grid">
-        <div class="overview-block">
-          <div class="overview-title">Time</div>
-          <div class="time-main" id="dubaiTimeCard">--:--</div>
-          <div class="time-sub" id="localTimeText">Your local time: --:--</div>
-        </div>
-        <div class="overview-block">
-          <div class="overview-title">Flights on dashboard</div>
-          <div class="overview-number" id="statTotal">0</div>
-          <div class="overview-sub">All airlines / simulators</div>
-        </div>
-        <div class="overview-block">
-          <div class="overview-title">Live &amp; boarding</div>
-          <div class="overview-number" id="statActive">0</div>
-          <div class="overview-sub">Live or boarding flights</div>
-        </div>
-        <div class="overview-block">
-          <div class="overview-title">Delays &amp; cancellations</div>
-          <div class="overview-number" id="statDisrupted">0</div>
-          <div class="overview-sub" id="lastUpdatedText">Last OCC update: —</div>
-        </div>
+      <div class="schedule-summary">
+        <span class="summary-pill" id="summaryTotal">0 flights scheduled</span>
+        <span class="summary-pill" id="summaryEmirates">0 Emirates flights</span>
+        <span class="summary-pill" id="summaryFlydubai">0 flydubai flights</span>
+        <span class="summary-pill" id="summaryDisrupted">0 delayed / cancelled</span>
       </div>
 
-      <div class="status-legend" aria-label="Status legend">
-        <div class="status-legend-item">
-          <span class="status-dot dot-green"></span> On Time
+      <div class="filter-row">
+        <div class="filter-group">
+          <div class="filter-label">Airline</div>
+          <select id="filterAirline" class="filter-select">
+            <option value="all">All airlines</option>
+            <option value="Emirates Airlines (Unified)">Emirates Airlines (Unified)</option>
+            <option value="flydubai">flydubai</option>
+          </select>
         </div>
-        <div class="status-legend-item">
-          <span class="status-dot dot-blue"></span> Boarding / Live
+        <div class="filter-group">
+          <div class="filter-label">Simulator</div>
+          <select id="filterSim" class="filter-select">
+            <option value="all">All</option>
+            <option value="PTFS">PTFS</option>
+            <option value="ROAV">ROAV</option>
+            <option value="N/A">N/A</option>
+          </select>
         </div>
-        <div class="status-legend-item">
-          <span class="status-dot dot-grey"></span> Landed
+        <div class="filter-group">
+          <div class="filter-label">Status</div>
+          <select id="filterStatus" class="filter-select">
+            <option value="all">All statuses</option>
+            <option value="On Time">On Time</option>
+            <option value="Boarding">Boarding</option>
+            <option value="Live">Live</option>
+            <option value="Landed">Landed</option>
+            <option value="Delayed">Delayed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
         </div>
-        <div class="status-legend-item">
-          <span class="status-dot dot-amber"></span> Delayed
-        </div>
-        <div class="status-legend-item">
-          <span class="status-dot dot-red"></span> Cancelled
+        <div class="filter-group" style="flex:1;min-width:180px;">
+          <div class="filter-label">Search</div>
+          <input id="filterSearch" class="filter-input" type="text" placeholder="Flight, airport, gate, remarks…">
         </div>
       </div>
     </section>
 
-    <!-- Flights + side panel -->
-    <section class="flights-layout">
-      <!-- Flights card -->
-      <section class="card" aria-label="Live flights">
-        <h2>Live operations</h2>
-        <p>View and filter all scheduled virtual flights. OCC staff can update this schedule in real time from the panel at the bottom of this page.</p>
-
-        <!-- Filters -->
-        <div class="filters">
-          <div>
-            <div class="filter-label">Airline</div>
-            <select id="filterAirline" class="filter-select">
-              <option value="all">All airlines</option>
-              <option value="Emirates Airlines (Unified)">Emirates Airlines (Unified)</option>
-              <option value="flydubai">flydubai</option>
-            </select>
-          </div>
-          <div>
-            <div class="filter-label">Simulator</div>
-            <select id="filterSim" class="filter-select">
-              <option value="all">All</option>
-              <option value="PTFS">PTFS</option>
-              <option value="ROAV">ROAV</option>
-              <option value="N/A">N/A</option>
-            </select>
-          </div>
-          <div>
-            <div class="filter-label">Status</div>
-            <select id="filterStatus" class="filter-select">
-              <option value="all">All statuses</option>
-              <option value="On Time">On Time</option>
-              <option value="Boarding">Boarding</option>
-              <option value="Live">Live</option>
-              <option value="Landed">Landed</option>
-              <option value="Delayed">Delayed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
-          <div>
-            <div class="filter-label">Search</div>
-            <input id="filterSearch" class="filter-input" type="text" placeholder="Flight, airport, gate…">
-          </div>
-        </div>
-
-        <!-- Table -->
-        <div class="table-wrapper" aria-label="Flights table">
-          <table>
-            <thead>
-              <tr>
-                <th>Number</th>
-                <th>Airline</th>
-                <th>Sim</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Dep</th>
-                <th>Arr</th>
-                <th>Status</th>
-                <th>Gate</th>
-                <th style="text-align:right;">OCC</th>
-              </tr>
-            </thead>
-            <tbody id="flightsBody">
-              <!-- rows injected by JS -->
-            </tbody>
-          </table>
-        </div>
-        <div style="margin-top:6px;font-size:0.8rem;color:#9ca3af;">
-          Statuses are updated manually by OCC staff and may be slightly behind live operations.
-        </div>
-      </section>
-
-      <!-- Side info card -->
-      <aside class="card" aria-label="Dashboard information">
-        <h3>How this dashboard works</h3>
-        <p class="muted">
-          This tool is managed by the Operations Control Center for Emirates Group Roblox. All data is for
-          <strong>virtual roleplay only</strong>.
-        </p>
-        <ul class="side-list">
-          <li>✅ Emirates Airlines (Unified) flights send Discord announcements when created or when status changes.</li>
-          <li>🧡 flydubai flights are shown here but do <strong>not</strong> send Discord notifications.</li>
-          <li>⌚ Times shown are local to the airports entered by OCC staff.</li>
-          <li>🔁 Refreshing the page will keep any saved flights (stored in your browser).</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid #e5e7eb;margin:12px 0;">
-        <div class="side-card-title">Useful links</div>
-        <ul class="side-list">
-          <li><a href="https://flyemirates.emiratesgrouproblox.link/book" target="_blank" rel="noopener">Book your virtual flight</a></li>
-          <li><a href="https://emiratesgrouproblox.link/support" target="_blank" rel="noopener">Support Center</a></li>
-          <li><a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Emirates Group Roblox website</a></li>
-        </ul>
-      </aside>
+    <!-- Flights list -->
+    <section class="flights-section" aria-label="Schedule">
+      <div class="flights-section-title">
+        <span class="dot"></span>
+        <span>Scheduled flights</span>
+      </div>
+      <div id="flightsContainer">
+        <!-- cards go here -->
+      </div>
     </section>
 
-    <!-- OCC panel under the dashboard -->
-    <section class="card" aria-label="OCC tools">
-      <!-- Logged out view -->
+    <!-- OCC panel -->
+    <section class="occ-card" aria-label="OCC panel">
+      <!-- Logged out -->
       <div id="occLoggedOut">
         <h2>OCC login</h2>
-        <p>Authorized Operations Control Center staff can log in here to add, edit, and remove flights from the dashboard above, and to update the OCC announcement.</p>
-
+        <p>Authorized Operations Control Center staff can log in here to add, edit, and remove flights from the dashboard above.</p>
         <div class="pill-note">
           <span>🔐</span>
           <span>For internal Emirates Group Roblox staff only.</span>
@@ -890,44 +800,29 @@
 
         <form id="loginForm">
           <div class="form-row">
-            <label class="form-label" for="occPassword">
+            <label for="occPassword" class="form-label">
               OCC password
               <span class="hint">case-sensitive</span>
             </label>
-            <input id="occPassword" type="password" class="form-input" required>
+            <input id="occPassword" class="form-input" type="password" required>
           </div>
-          <button type="submit" class="btn-primary btn-block">Login to OCC panel</button>
+          <button type="submit" class="btn-primary btn-block">Login to OCC tools</button>
         </form>
-        <div id="loginStatus" class="status-banner error" style="display:none;"></div>
+        <div id="loginStatus" class="status-banner error"></div>
       </div>
 
-      <!-- Logged in view -->
+      <!-- Logged in -->
       <div id="occLoggedIn" style="display:none;">
         <h2>OCC tools</h2>
-        <p class="muted">
-          You are logged in to the Flight Dashboard OCC panel. Use this form to create or edit flights; changes appear instantly in the live table above.
-        </p>
-
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <p>Use this panel to manage the live schedule. Updates appear instantly in the cards above.</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
           <span class="badge-small">OCC session active</span>
           <button type="button" id="btnLogout" class="btn-secondary">Log out</button>
         </div>
 
-        <!-- Announcement editor -->
-        <div class="form-row">
-          <label class="form-label" for="announcementInput">
-            OCC announcement
-            <span class="hint">shown in yellow banner at top</span>
-          </label>
-          <input id="announcementInput" class="form-input" placeholder="Example: Expect minor delays due to training operations.">
-        </div>
-        <button type="button" id="btnSaveAnnouncement" class="btn-secondary" style="margin-bottom:14px;">Update announcement</button>
-
-        <hr style="border:none;border-top:1px solid #e5e7eb;margin:10px 0 14px;">
-
-        <!-- Flight form -->
         <form id="flightForm">
           <input type="hidden" id="editingId" value="">
+
           <div class="form-row">
             <label class="form-label" for="flightNumber">
               Flight number
@@ -952,18 +847,18 @@
             <select id="simSelect" class="form-select" required>
               <option value="PTFS">PTFS</option>
               <option value="ROAV">ROAV</option>
-              <option value="N/A">N/A (for flydubai or generic)</option>
+              <option value="N/A">N/A</option>
             </select>
           </div>
 
           <div class="form-row">
-            <label class="form-label" for="fromInput">From</label>
-            <input id="fromInput" class="form-input" placeholder="e.g. Greater Rockford International" required>
+            <label class="form-label" for="fromInput">From (airport)</label>
+            <input id="fromInput" class="form-input" placeholder="Dubai International" required>
           </div>
 
           <div class="form-row">
-            <label class="form-label" for="toInput">To</label>
-            <input id="toInput" class="form-input" placeholder="e.g. Dubai International" required>
+            <label class="form-label" for="toInput">To (airport)</label>
+            <input id="toInput" class="form-input" placeholder="Greater Rockford International" required>
           </div>
 
           <div class="form-row" style="display:flex;gap:10px;">
@@ -991,7 +886,7 @@
 
           <div class="form-row">
             <label class="form-label" for="gateInput">Gate / stand</label>
-            <input id="gateInput" class="form-input" placeholder="e.g. A12, Remote, Hangar 3">
+            <input id="gateInput" class="form-input" placeholder="A12, Remote, Hangar 3">
           </div>
 
           <div class="form-row">
@@ -999,72 +894,60 @@
               Remarks
               <span class="hint">optional</span>
             </label>
-            <textarea id="remarksInput" class="form-textarea" placeholder="Example: Training flight, Investor event, Delayed due to ATC, etc."></textarea>
+            <textarea id="remarksInput" class="form-textarea" placeholder="Training flight / Investor event / Delay reason etc."></textarea>
           </div>
 
           <button type="submit" class="btn-primary btn-block" id="btnSaveFlight">Add flight</button>
           <button type="button" class="btn-secondary btn-block" id="btnCancelEdit" style="margin-top:6px;display:none;">Cancel edit</button>
         </form>
 
-        <div id="occStatus" class="status-banner success" style="display:none;"></div>
+        <div id="occStatus" class="status-banner success"></div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <div class="footer-main">
+    <div class="footer-inner">
       <span>
         © 2025 Emirates Group Roblox. All rights reserved. This dashboard is for virtual roleplay operations only and is
-        <strong>not affiliated with, sponsored by, or endorsed by Emirates or the Emirates Group.</strong>
+        not affiliated with, sponsored by, or endorsed by Emirates or the Emirates Group.
       </span>
-      <div class="footer-logo-flag">EGR</div>
+      <div class="footer-logo">EGR</div>
     </div>
   </footer>
 
   <script>
-    // ====== CONFIG ======
+    // ===== CONFIG =====
     const OCC_PASSWORD = "EmiratesGroupRoblox#OCCOPSFlightDash2025@egr";
-    const STORAGE_KEY_FLIGHTS = "egr_flights_v1";
+    const STORAGE_KEY_FLIGHTS = "egr_flights_v2_cards";
     const STORAGE_KEY_OCC = "egr_occ_logged_in";
-    const STORAGE_KEY_ANN = "egr_ops_announcement";
-    const STORAGE_KEY_LAST_UPDATED = "egr_flights_last_updated";
     const STATUS_SEQUENCE = ["On Time", "Boarding", "Live", "Landed", "Delayed", "Cancelled"];
 
-    // Discord webhook (for Emirates Airlines Unified announcements only)
-    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1399411845718347919/XnLVFRKU6VGinFV5p-0aQ32K_DopH3HY1QH4JAnoP0nz6MSBlW5PWznn5PazUbedqRxB";
-
-    // ====== STATE ======
+    // ===== STATE =====
     let flights = [];
     let occLoggedIn = false;
-    let lastUpdatedISO = null;
-    let opsAnnouncement = "No major disruptions reported.";
 
-    // DOM references: overview & banner
-    const dubaiTimeTop = document.getElementById("dubaiTimeTop");
+    // DOM refs
     const dubaiTimeHeader = document.getElementById("dubaiTimeHeader");
-    const dubaiTimeCard = document.getElementById("dubaiTimeCard");
-    const localTimeText = document.getElementById("localTimeText");
-    const annText = document.getElementById("annText");
-    const statTotal = document.getElementById("statTotal");
-    const statActive = document.getElementById("statActive");
-    const statDisrupted = document.getElementById("statDisrupted");
-    const lastUpdatedText = document.getElementById("lastUpdatedText");
+    const todayDateMain = document.getElementById("todayDateMain");
 
-    // DOM references: flights
-    const flightsBody = document.getElementById("flightsBody");
+    const summaryTotal = document.getElementById("summaryTotal");
+    const summaryEmirates = document.getElementById("summaryEmirates");
+    const summaryFlydubai = document.getElementById("summaryFlydubai");
+    const summaryDisrupted = document.getElementById("summaryDisrupted");
+
     const filterAirline = document.getElementById("filterAirline");
     const filterSim = document.getElementById("filterSim");
     const filterStatus = document.getElementById("filterStatus");
     const filterSearch = document.getElementById("filterSearch");
+    const flightsContainer = document.getElementById("flightsContainer");
 
-    // DOM references: OCC
     const occLoggedOut = document.getElementById("occLoggedOut");
     const occLoggedInEl = document.getElementById("occLoggedIn");
     const loginForm = document.getElementById("loginForm");
     const loginStatus = document.getElementById("loginStatus");
-    const occStatus = document.getElementById("occStatus");
     const btnLogout = document.getElementById("btnLogout");
+    const occStatus = document.getElementById("occStatus");
 
     const flightForm = document.getElementById("flightForm");
     const editingIdInput = document.getElementById("editingId");
@@ -1082,79 +965,26 @@
     const gateInput = document.getElementById("gateInput");
     const remarksInput = document.getElementById("remarksInput");
 
-    const announcementInput = document.getElementById("announcementInput");
-    const btnSaveAnnouncement = document.getElementById("btnSaveAnnouncement");
-
-    // ====== Time helpers ======
-    function updateTimeDisplays() {
+    // ===== Time display =====
+    function updateTime() {
       const now = new Date();
       const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-      const dubaiDate = new Date(utc + 4 * 3600000); // UTC+4
+      const dubai = new Date(utc + 4 * 3600000);
+      const timeStr = dubai.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
-      const optionsTime = { hour: "2-digit", minute: "2-digit" };
-      const optionsFull = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+      dubaiTimeHeader.textContent = timeStr;
 
-      const dubaiStr = dubaiDate.toLocaleTimeString([], optionsTime);
-      const dubaiStrLong = dubaiDate.toLocaleTimeString([], optionsFull);
-      const localStr = now.toLocaleTimeString([], optionsTime);
-
-      dubaiTimeTop.textContent = dubaiStrLong;
-      dubaiTimeHeader.textContent = dubaiStr;
-      dubaiTimeCard.textContent = dubaiStrLong;
-      localTimeText.textContent = "Your local time: " + localStr;
+      const dateStr = dubai.toLocaleDateString([], {
+        weekday: "long",
+        day: "2-digit",
+        month: "short"
+      });
+      todayDateMain.textContent = dateStr;
     }
-    setInterval(updateTimeDisplays, 1000);
+    updateTime();
+    setInterval(updateTime, 1000);
 
-    // ====== Discord notification helper ======
-    async function sendDiscordNotification(kind, flight, extra = {}) {
-      // Only Emirates Airlines (Unified) should send announcements
-      if (!flight || flight.airline !== "Emirates Airlines (Unified)") return;
-
-      let statusLine;
-      if (kind === "status_changed" && extra.previousStatus) {
-        statusLine = `Status: ${extra.previousStatus} → ${flight.status}`;
-      } else {
-        statusLine = `Status: ${flight.status}`;
-      }
-
-      const bodyLines = [
-        "# Flight Announcement",
-        "-# Operations Control Center",
-        "",
-        `Flight Number: ${flight.flightNumber}`,
-        `Route: ${flight.from} → ${flight.to}`,
-        `Department Time: ${flight.depTime}`,
-        `Arrival Time: ${flight.arrTime}`,
-        statusLine,
-        `Gate: ${flight.gate || "N/A"}`,
-        `Remarks: ${flight.remarks || "N/A"}`,
-        "",
-        "Book your flight now at flyemirates.emiratesgrouproblox.link/book",
-        "Require any assistance contact our support center agents at emiratesgrouproblox.link/support",
-        "",
-        "For live status on your flight please regularly check flightdashboard.emiratesgrouproblox.link",
-        "",
-        "Thank you for your understanding.",
-        "Operations Control Center, Emirates Group Roblox",
-        "helpline.egr@gmail.com",
-        "",
-        "For any purchases or any tickets or services please contact our staff members via official systems before initiating the process thank you for your ongoing understanding."
-      ];
-
-      const content = bodyLines.join("\n");
-
-      try {
-        await fetch(DISCORD_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content })
-        });
-      } catch (err) {
-        console.error("Discord webhook error:", err);
-      }
-    }
-
-    // ====== Storage helpers ======
+    // ===== Storage helpers =====
     function loadFlights() {
       const stored = localStorage.getItem(STORAGE_KEY_FLIGHTS);
       if (stored) {
@@ -1165,27 +995,11 @@
           flights = [];
         }
       }
-      const lu = localStorage.getItem(STORAGE_KEY_LAST_UPDATED);
-      if (lu) lastUpdatedISO = lu;
-
-      const annStored = localStorage.getItem(STORAGE_KEY_ANN);
-      if (annStored) opsAnnouncement = annStored;
-      annText.textContent = opsAnnouncement;
-      if (announcementInput) announcementInput.value = opsAnnouncement;
     }
 
     function saveFlights() {
       localStorage.setItem(STORAGE_KEY_FLIGHTS, JSON.stringify(flights));
-      lastUpdatedISO = new Date().toISOString();
-      localStorage.setItem(STORAGE_KEY_LAST_UPDATED, lastUpdatedISO);
-      updateStats();
-    }
-
-    function saveAnnouncement() {
-      opsAnnouncement = announcementInput.value.trim() || "No major disruptions reported.";
-      localStorage.setItem(STORAGE_KEY_ANN, opsAnnouncement);
-      annText.textContent = opsAnnouncement;
-      showOCCStatus("success", "OCC announcement updated.");
+      updateSummaries();
     }
 
     function setOCCLoggedIn(value) {
@@ -1194,7 +1008,6 @@
         occLoggedOut.style.display = "none";
         occLoggedInEl.style.display = "block";
         localStorage.setItem(STORAGE_KEY_OCC, "1");
-        announcementInput.value = opsAnnouncement;
       } else {
         occLoggedOut.style.display = "block";
         occLoggedInEl.style.display = "none";
@@ -1203,12 +1016,14 @@
       renderFlights();
     }
 
-    function showLoginError(msg) {
+    function showLoginMessage(type, msg) {
       loginStatus.style.display = "block";
+      loginStatus.className = "status-banner " + type;
       loginStatus.textContent = msg;
+      setTimeout(() => { loginStatus.style.display = "none"; }, 3500);
     }
 
-    function showOCCStatus(type, msg) {
+    function showOCCMessage(type, msg) {
       occStatus.style.display = "block";
       occStatus.className = "status-banner " + type;
       occStatus.textContent = msg;
@@ -1231,6 +1046,20 @@
       btnCancelEdit.style.display = "none";
     }
 
+    // ===== Stats / summary =====
+    function updateSummaries() {
+      const total = flights.length;
+      const emiratesCount = flights.filter(f => f.airline === "Emirates Airlines (Unified)").length;
+      const flydubaiCount = flights.filter(f => f.airline === "flydubai").length;
+      const disrupted = flights.filter(f => f.status === "Delayed" || f.status === "Cancelled").length;
+
+      summaryTotal.textContent = total + " flight" + (total === 1 ? "" : "s") + " scheduled";
+      summaryEmirates.textContent = emiratesCount + " Emirates flight" + (emiratesCount === 1 ? "" : "s");
+      summaryFlydubai.textContent = flydubaiCount + " flydubai flight" + (flydubaiCount === 1 ? "" : "s");
+      summaryDisrupted.textContent = disrupted + " delayed / cancelled";
+    }
+
+    // ===== Actions =====
     function startEditFlight(id) {
       const f = flights.find(fl => fl.id === id);
       if (!f) return;
@@ -1258,45 +1087,22 @@
       flights = flights.filter(fl => fl.id !== id);
       saveFlights();
       renderFlights();
-      showOCCStatus("success", "Flight " + f.flightNumber + " removed.");
-      // No Discord notification for deletions
+      showOCCMessage("success", "Flight " + f.flightNumber + " removed.");
     }
 
     function cycleStatus(id) {
       const f = flights.find(fl => fl.id === id);
       if (!f) return;
-      const oldStatus = f.status;
       const idx = STATUS_SEQUENCE.indexOf(f.status);
       const next = STATUS_SEQUENCE[(idx + 1) % STATUS_SEQUENCE.length];
       f.status = next;
       saveFlights();
       renderFlights();
-      // Discord: ONLY Emirates Unified status changes
-      sendDiscordNotification("status_changed", f, { previousStatus: oldStatus });
     }
 
-    // ====== Stats ======
-    function updateStats() {
-      const total = flights.length;
-      const active = flights.filter(f => f.status === "Live" || f.status === "Boarding").length;
-      const disrupted = flights.filter(f => f.status === "Delayed" || f.status === "Cancelled").length;
-
-      statTotal.textContent = total;
-      statActive.textContent = active;
-      statDisrupted.textContent = disrupted;
-
-      if (lastUpdatedISO) {
-        const d = new Date(lastUpdatedISO);
-        const str = d.toLocaleString([], { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" });
-        lastUpdatedText.textContent = "Last OCC update: " + str;
-      } else {
-        lastUpdatedText.textContent = "Last OCC update: —";
-      }
-    }
-
-    // ====== Rendering ======
+    // ===== Rendering =====
     function renderFlights() {
-      flightsBody.innerHTML = "";
+      flightsContainer.innerHTML = "";
 
       const airlineFilter = filterAirline.value;
       const simFilter = filterSim.value;
@@ -1323,111 +1129,162 @@
       });
 
       if (filtered.length === 0) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = 10;
-        td.className = "empty-row";
-        td.textContent = "No flights in the dashboard yet. OCC staff can add flights from the panel below.";
-        tr.appendChild(td);
-        flightsBody.appendChild(tr);
-        updateStats();
+        const div = document.createElement("div");
+        div.className = "empty-state";
+        div.textContent = "No flights in the dashboard yet. Once OCC staff add flights, they will appear here in real time.";
+        flightsContainer.appendChild(div);
+        updateSummaries();
         return;
       }
 
       filtered.forEach(f => {
-        const tr = document.createElement("tr");
+        const card = document.createElement("article");
+        card.className = "flight-card";
 
-        const tdNum = document.createElement("td");
-        tdNum.className = "col-number";
-        tdNum.textContent = f.flightNumber;
-        tr.appendChild(tdNum);
+        // LEFT
+        const left = document.createElement("div");
+        left.className = "flight-left";
 
-        const tdAirline = document.createElement("td");
-        const tag = document.createElement("span");
-        tag.className = "airline-tag";
-        const dot = document.createElement("span");
-        dot.className = "airline-dot " + (f.airline === "flydubai" ? "flydubai" : "emirates");
-        tag.appendChild(dot);
-        const label = document.createElement("span");
-        label.textContent = f.airline === "flydubai" ? "flydubai" : "Emirates Unified";
-        tag.appendChild(label);
-        tdAirline.appendChild(tag);
-        tr.appendChild(tdAirline);
+        const logo = document.createElement("div");
+        logo.className = "airline-logo " + (f.airline === "flydubai" ? "flydubai" : "emirates");
+        logo.textContent = f.airline === "flydubai" ? "FZ" : "EKU";
 
-        const tdSim = document.createElement("td");
-        const simSpan = document.createElement("span");
-        simSpan.className = "sim-tag";
-        simSpan.textContent = f.simulator;
-        tdSim.appendChild(simSpan);
-        tr.appendChild(tdSim);
+        const leftText = document.createElement("div");
+        leftText.className = "flight-left-text";
 
-        const tdFrom = document.createElement("td");
-        tdFrom.textContent = f.from;
-        tr.appendChild(tdFrom);
+        const numberEl = document.createElement("div");
+        numberEl.className = "flight-number";
+        numberEl.textContent = f.flightNumber;
 
-        const tdTo = document.createElement("td");
-        tdTo.textContent = f.to;
-        tr.appendChild(tdTo);
+        const airlineEl = document.createElement("div");
+        airlineEl.className = "flight-airline";
+        airlineEl.textContent = f.airline;
 
-        const tdDep = document.createElement("td");
-        tdDep.textContent = f.depTime;
-        tr.appendChild(tdDep);
+        const tags = document.createElement("div");
+        tags.className = "flight-tags";
 
-        const tdArr = document.createElement("td");
-        tdArr.textContent = f.arrTime;
-        tr.appendChild(tdArr);
+        const simChip = document.createElement("span");
+        simChip.className = "chip";
+        simChip.textContent = f.simulator;
+        tags.appendChild(simChip);
 
-        const tdStatus = document.createElement("td");
-        const statusSpan = document.createElement("span");
-        statusSpan.className = "status-pill status-" + f.status.replace(" ", "\\ ");
-        statusSpan.textContent = f.status;
+        const typeChip = document.createElement("span");
+        typeChip.className = "chip";
+        typeChip.textContent = f.airline === "flydubai" ? "flydubai service" : "Emirates Unified service";
+        tags.appendChild(typeChip);
+
+        leftText.appendChild(numberEl);
+        leftText.appendChild(airlineEl);
+        leftText.appendChild(tags);
+
+        left.appendChild(logo);
+        left.appendChild(leftText);
+
+        // MIDDLE
+        const middle = document.createElement("div");
+        middle.className = "flight-middle";
+
+        const depBlock = document.createElement("div");
+        depBlock.className = "time-block";
+        const depTime = document.createElement("div");
+        depTime.className = "time-main";
+        depTime.textContent = f.depTime;
+        const depCity = document.createElement("div");
+        depCity.className = "time-city";
+        depCity.textContent = f.from;
+        const depLabel = document.createElement("div");
+        depLabel.className = "time-label";
+        depLabel.textContent = "Departure";
+        depBlock.appendChild(depTime);
+        depBlock.appendChild(depCity);
+        depBlock.appendChild(depLabel);
+
+        const timeline = document.createElement("div");
+        timeline.className = "timeline";
+        const arrow = document.createElement("div");
+        arrow.className = "timeline-arrow";
+        const timelineText = document.createElement("div");
+        timelineText.textContent = "Route";
+        timeline.appendChild(arrow);
+        timeline.appendChild(timelineText);
+
+        const arrBlock = document.createElement("div");
+        arrBlock.className = "time-block";
+        const arrTime = document.createElement("div");
+        arrTime.className = "time-main";
+        arrTime.textContent = f.arrTime;
+        const arrCity = document.createElement("div");
+        arrCity.className = "time-city";
+        arrCity.textContent = f.to;
+        const arrLabel = document.createElement("div");
+        arrLabel.className = "time-label";
+        arrLabel.textContent = "Arrival";
+        arrBlock.appendChild(arrTime);
+        arrBlock.appendChild(arrCity);
+        arrBlock.appendChild(arrLabel);
+
+        middle.appendChild(depBlock);
+        middle.appendChild(timeline);
+        middle.appendChild(arrBlock);
+
+        // RIGHT
+        const right = document.createElement("div");
+        right.className = "flight-right";
+
+        const status = document.createElement("button");
+        status.type = "button";
+        status.className = "status-pill status-" + f.status.replace(" ", "\\ ");
+        status.textContent = f.status;
+        status.title = occLoggedIn ? "Click to cycle status" : "";
         if (occLoggedIn) {
-          statusSpan.classList.add("clickable");
-          statusSpan.title = "Click to cycle status";
-          statusSpan.addEventListener("click", () => cycleStatus(f.id));
+          status.addEventListener("click", () => cycleStatus(f.id));
         }
-        tdStatus.appendChild(statusSpan);
-        tr.appendChild(tdStatus);
+        right.appendChild(status);
 
-        const tdGate = document.createElement("td");
-        tdGate.textContent = f.gate || "—";
-        tr.appendChild(tdGate);
+        const gateInfo = document.createElement("div");
+        gateInfo.className = "gate-info";
+        gateInfo.innerHTML = "Gate / stand: <span>" + (f.gate || "TBA") + "</span>";
+        right.appendChild(gateInfo);
 
-        const tdActions = document.createElement("td");
-        tdActions.style.textAlign = "right";
+        if (f.remarks) {
+          const remarks = document.createElement("div");
+          remarks.className = "remarks";
+          remarks.textContent = f.remarks;
+          right.appendChild(remarks);
+        }
+
         if (occLoggedIn) {
-          const wrapper = document.createElement("div");
-          wrapper.className = "actions";
+          const actions = document.createElement("div");
+          actions.className = "card-actions";
 
           const editBtn = document.createElement("button");
           editBtn.type = "button";
-          editBtn.className = "action-btn";
-          editBtn.title = "Edit flight";
-          editBtn.innerHTML = '<span class="icon">✏</span><span>Edit</span>';
+          editBtn.className = "btn-small";
+          editBtn.innerHTML = "✏ Edit";
           editBtn.addEventListener("click", () => startEditFlight(f.id));
 
           const delBtn = document.createElement("button");
           delBtn.type = "button";
-          delBtn.className = "action-btn";
-          delBtn.title = "Delete flight";
-          delBtn.innerHTML = '<span class="icon">🗑</span><span>Delete</span>';
+          delBtn.className = "btn-small";
+          delBtn.innerHTML = "🗑 Delete";
           delBtn.addEventListener("click", () => deleteFlight(f.id));
 
-          wrapper.appendChild(editBtn);
-          wrapper.appendChild(delBtn);
-          tdActions.appendChild(wrapper);
-        } else {
-          tdActions.textContent = "";
+          actions.appendChild(editBtn);
+          actions.appendChild(delBtn);
+          right.appendChild(actions);
         }
-        tr.appendChild(tdActions);
 
-        flightsBody.appendChild(tr);
+        card.appendChild(left);
+        card.appendChild(middle);
+        card.appendChild(right);
+
+        flightsContainer.appendChild(card);
       });
 
-      updateStats();
+      updateSummaries();
     }
 
-    // ====== Event listeners ======
+    // ===== Event listeners =====
     [filterAirline, filterSim, filterStatus].forEach(el => {
       el.addEventListener("change", renderFlights);
     });
@@ -1435,15 +1292,14 @@
 
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      loginStatus.style.display = "none";
       const val = document.getElementById("occPassword").value;
       if (val === OCC_PASSWORD) {
         setOCCLoggedIn(true);
         document.getElementById("occPassword").value = "";
-        showOCCStatus("success", "OCC login successful.");
+        showOCCMessage("success", "OCC login successful.");
         window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
       } else {
-        showLoginError("Incorrect OCC password.");
+        showLoginMessage("error", "Incorrect OCC password.");
       }
     });
 
@@ -1468,21 +1324,19 @@
       const remarks = remarksInput.value.trim();
 
       if (!flightNumber || !from || !to || !depTime || !arrTime) {
-        showOCCStatus("error", "Please fill in all required fields.");
+        showOCCMessage("error", "Please fill in all required fields.");
         return;
       }
 
       if (id) {
-        // Edit existing flight (no Discord unless status changed via click)
         const idx = flights.findIndex(fl => fl.id === id);
         if (idx !== -1) {
           flights[idx] = { ...flights[idx], flightNumber, airline, simulator, from, to, depTime, arrTime, status, gate, remarks };
         }
         saveFlights();
         renderFlights();
-        showOCCStatus("success", "Flight " + flightNumber + " updated.");
+        showOCCMessage("success", "Flight " + flightNumber + " updated.");
       } else {
-        // New flight (Discord announcement for Emirates Unified only)
         const newFlight = {
           id: String(Date.now()),
           flightNumber,
@@ -1499,8 +1353,7 @@
         flights.push(newFlight);
         saveFlights();
         renderFlights();
-        showOCCStatus("success", "Flight " + flightNumber + " added to the dashboard.");
-        sendDiscordNotification("created", newFlight);
+        showOCCMessage("success", "Flight " + flightNumber + " added to the dashboard.");
       }
 
       resetForm();
@@ -1508,18 +1361,14 @@
 
     btnCancelEdit.addEventListener("click", () => {
       resetForm();
-      showOCCStatus("success", "Edit cancelled.");
+      showOCCMessage("success", "Edit cancelled.");
     });
 
-    btnSaveAnnouncement.addEventListener("click", saveAnnouncement);
-
-    // ====== Init ======
+    // ===== Init =====
     loadFlights();
-    updateTimeDisplays();
+    updateSummaries();
     renderFlights();
-    updateStats();
 
-    // Restore OCC session if stored
     if (localStorage.getItem(STORAGE_KEY_OCC) === "1") {
       setOCCLoggedIn(true);
     } else {
