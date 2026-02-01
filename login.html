@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Staff Login | EGR Flight Operations</title>
-  <link rel="icon" href="/assets/img/favicon.png" />
-  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/assets/js/config.js"></script>
+  <script src="assets/js/config.js"></script>
 </head>
 <body>
   <header class="navbar">
     <div class="container inner">
-      <a class="brand" href="/">
-        <img src="/assets/img/logo.png" alt="EGR" />
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.png" alt="EGR" />
         <div class="title">
           <b>Emirates Group Roblox</b>
           <span>Flight Operations</span>
@@ -29,6 +29,9 @@
       </nav>
     </div>
   </header>
+  <div class="announce-bar">
+    <div class="container inner">We are currently not operational. Check back soon!</div>
+  </div>
 
   <main class="page">
     <div class="container">
@@ -38,18 +41,18 @@
 
         <div class="grid-2" style="grid-template-columns:1fr; gap:10px;">
           <div class="input">
-            <span style="opacity:.75">✉️</span>
+            <span style="opacity:.75">✉</span>
             <input id="email" type="email" placeholder="Email address" autocomplete="email" />
           </div>
           <div class="input">
-            <span style="opacity:.75">🔒</span>
+            <span style="opacity:.75"></span>
             <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
           </div>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap;">
             <button class="btn primary" id="loginBtn">Log in</button>
             <button class="btn" id="resetBtn">Forgot password</button>
-            <a class="btn" href="/">Back to flight board</a>
+            <a class="btn" href="index.html">Back to flight board</a>
           </div>
 
           <div class="small" id="hint" style="margin-top:6px;">
@@ -67,6 +70,6 @@
     </div>
   </footer>
 
-  <script type="module" src="/assets/js/login.js"></script>
+  <script type="module" src="assets/js/login.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ import { initTheme } from "./theme.js";
 import { qs, toast, fmtDateTime, setLoading, setupReveal } from "./utils.js";
 import { getSupabase, requireAuth, signOut } from "./supabaseClient.js";
 import { fetchMyProfile, routeByProfile } from "./authHelpers.js";
+const ROOT = (window.location.pathname.includes("/staff/") || window.location.pathname.includes("/occ/") || window.location.pathname.includes("/instructors/")) ? "../" : "./";
 
 const sb = getSupabase();
 
@@ -14,7 +15,7 @@ async function ensureAccess(){
 
   const me = await fetchMyProfile();
   if(!me?.profile){
-    window.location.href = "/not-authorised.html";
+    window.location.href = ROOT + "not-authorised.html";
     return null;
   }
   if(!(me.profile.is_instructor || me.profile.is_admin || me.profile.is_occ)){

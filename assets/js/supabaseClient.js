@@ -1,4 +1,5 @@
 import { toast } from "./utils.js";
+const ROOT = (window.location.pathname.includes("/staff/") || window.location.pathname.includes("/occ/") || window.location.pathname.includes("/instructors/")) ? "../" : "./";
 
 export function getSupabase(){
   if(window.__supabase) return window.__supabase;
@@ -25,12 +26,12 @@ export async function requireAuth(){
   const sb = getSupabase();
   const { data, error } = await sb.auth.getSession();
   if(error) throw error;
-  if(!data.session) window.location.href = "/login.html";
+  if(!data.session) window.location.href = ROOT + "login.html";
   return data.session;
 }
 
 export async function signOut(){
   const sb = getSupabase();
   await sb.auth.signOut();
-  window.location.href = "/";
+  window.location.href = ROOT + "index.html";
 }

@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EGR Flight Board | flights.emiratesgrouproblox.link</title>
-  <link rel="icon" href="/assets/img/favicon.png" />
-  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/assets/js/config.js"></script>
+  <script src="assets/js/config.js"></script>
 </head>
 <body>
   <header class="navbar">
     <div class="container inner">
-      <a class="brand" href="/">
-        <img src="/assets/img/logo.png" alt="EGR" />
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.png" alt="EGR" />
         <div class="title">
           <b>Emirates Group Roblox</b>
           <span>Flight Operations</span>
@@ -25,18 +25,21 @@
         <a class="pill ghost" href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Directory</a>
         <a class="pill ghost" href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Careers</a>
         <a class="pill ghost" href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noreferrer">Socials</a>
-        <a class="pill primary" href="/login.html"><span class="dot"></span>Staff Login</a>
+        <a class="pill primary" href="login.html"><span class="dot"></span>Staff Login</a>
         <button id="themeToggle" class="icon-btn" title="Toggle theme">Light</button>
       </nav>
     </div>
   </header>
+  <div class="announce-bar">
+    <div class="container inner">We are currently not operational. Check back soon!</div>
+  </div>
 
   <section class="hero">
     <div class="banner" aria-hidden="true">
-      <img src="/assets/banner/1.png" class="active" alt="" />
-      <img src="/assets/banner/2.png" alt="" />
-      <img src="/assets/banner/3.png" alt="" />
-      <img src="/assets/banner/4.png" alt="" />
+      <img src="assets/banner/1.png" class="active" alt="" />
+      <img src="assets/banner/2.png" alt="" />
+      <img src="assets/banner/3.png" alt="" />
+      <img src="assets/banner/4.png" alt="" />
     </div>
     <div class="container content">
       <h1>Weekly Flight Board</h1>
@@ -66,7 +69,7 @@
 
         <div class="filters">
           <div class="input">
-            <span style="opacity:.75">🔎</span>
+            <span class="search-icon" aria-hidden="true"></span>
             <input id="searchBox" placeholder="Search flight number, origin, destination…" />
           </div>
           <div class="select">
@@ -99,6 +102,6 @@
     </div>
   </footer>
 
-  <script type="module" src="/assets/js/publicBoard.js"></script>
+  <script type="module" src="assets/js/publicBoard.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@ import { initTheme } from "./theme.js";
 import { qs, toast, fmtTime, fmtDuration, minutesBetween, fmtDateTime, setLoading, setupReveal } from "./utils.js";
 import { getSupabase, requireAuth, signOut } from "./supabaseClient.js";
 import { fetchMyProfile, routeByProfile } from "./authHelpers.js";
+const ROOT = (window.location.pathname.includes("/staff/") || window.location.pathname.includes("/occ/") || window.location.pathname.includes("/instructors/")) ? "../" : "./";
 
 const sb = getSupabase();
 
@@ -9,12 +10,12 @@ async function ensureAccess(){
   await requireAuth();
   const me = await fetchMyProfile();
   if(!me?.profile){
-    window.location.href = "/not-authorised.html";
+    window.location.href = ROOT + "not-authorised.html";
     return null;
   }
   // allow staff + instructors + occ/admin to open this page
   if(!(me.profile.is_staff || me.profile.is_instructor || me.profile.is_occ || me.profile.is_admin)){
-    window.location.href = "/not-authorised.html";
+    window.location.href = ROOT + "not-authorised.html";
     return null;
   }
   qs("#who").textContent = me.profile.display_name || me.profile.full_name || "Staff";

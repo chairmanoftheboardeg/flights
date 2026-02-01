@@ -2,6 +2,7 @@ import { initTheme } from "./theme.js";
 import { qs, toast, setLoading, setupReveal } from "./utils.js";
 import { getSupabase } from "./supabaseClient.js";
 import { fetchMyProfile, routeByProfile } from "./authHelpers.js";
+const ROOT = (window.location.pathname.includes("/staff/") || window.location.pathname.includes("/occ/") || window.location.pathname.includes("/instructors/")) ? "../" : "./";
 
 const sb = getSupabase();
 
@@ -27,7 +28,7 @@ async function login(){
 
     const me = await fetchMyProfile();
     if(!me?.profile){
-      window.location.href = "/not-authorised.html";
+      window.location.href = ROOT + "not-authorised.html";
       return;
     }
     window.location.href = routeByProfile(me.profile);

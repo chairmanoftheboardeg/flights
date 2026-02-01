@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Instructors | EGR Flight Operations</title>
-  <link rel="icon" href="/assets/img/favicon.png" />
-  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="icon" href="../assets/img/favicon.png" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/assets/js/config.js"></script>
+  <script src="../assets/js/config.js"></script>
 </head>
 <body>
   <header class="navbar">
     <div class="container inner">
       <a class="brand" href="/instructors/index.html">
-        <img src="/assets/img/logo.png" alt="EGR" />
+        <img src="../assets/img/logo.png" alt="EGR" />
         <div class="title">
           <b>Instructor Console</b>
           <span id="who">—</span>
@@ -21,7 +21,7 @@
       </a>
 
       <nav class="nav-links">
-        <a class="pill ghost" href="/">Public Board</a>
+        <a class="pill ghost" href="../index.html">Public Board</a>
         <a class="pill ghost" href="/staff/index.html">Staff</a>
         <a class="pill ghost" href="/occ/index.html">OCC</a>
         <button id="themeToggle" class="icon-btn" title="Toggle theme">Light</button>
@@ -29,6 +29,9 @@
       </nav>
     </div>
   </header>
+  <div class="announce-bar">
+    <div class="container inner">We are currently not operational. Check back soon!</div>
+  </div>
 
   <main class="page">
     <div class="container">
@@ -69,15 +72,15 @@
 
           <div id="reqDetail" style="display:none;">
             <div class="grid-2" style="grid-template-columns:1fr;gap:10px;">
-              <div class="input"><span style="opacity:.75">👤</span><input id="rd_requester" readonly /></div>
-              <div class="input"><span style="opacity:.75">🎯</span><input id="rd_role" readonly /></div>
+              <div class="input"><span style="opacity:.75"></span><input id="rd_requester" readonly /></div>
+              <div class="input"><span style="opacity:.75"></span><input id="rd_role" readonly /></div>
 
               <div class="grid-2" style="gap:10px;">
-                <div class="input"><span style="opacity:.75">📅</span><input id="rd_when" type="datetime-local" /></div>
-                <div class="input"><span style="opacity:.75">📍</span><input id="rd_where" placeholder="Location (e.g., Discord VC / Training Server)" /></div>
+                <div class="input"><span style="opacity:.75"></span><input id="rd_when" type="datetime-local" /></div>
+                <div class="input"><span style="opacity:.75"></span><input id="rd_where" placeholder="Location (e.g., Discord VC / Training Server)" /></div>
               </div>
 
-              <div class="input"><span style="opacity:.75">📝</span><input id="rd_notes" placeholder="Instructor notes (optional)" /></div>
+              <div class="input"><span style="opacity:.75"></span><input id="rd_notes" placeholder="Instructor notes (optional)" /></div>
 
               <div style="display:flex; gap:10px; flex-wrap:wrap;">
                 <button class="btn primary" id="scheduleBtn">Schedule</button>
@@ -99,6 +102,6 @@
     </div>
   </footer>
 
-  <script type="module" src="/assets/js/instructorDashboard.js"></script>
+  <script type="module" src="../assets/js/instructorDashboard.js"></script>
 </body>
 </html>

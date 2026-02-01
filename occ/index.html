@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OCC | EGR Flight Operations</title>
-  <link rel="icon" href="/assets/img/favicon.png" />
-  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="icon" href="../assets/img/favicon.png" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/assets/js/config.js"></script>
+  <script src="../assets/js/config.js"></script>
 </head>
 <body>
   <header class="navbar">
     <div class="container inner">
       <a class="brand" href="/occ/index.html">
-        <img src="/assets/img/logo.png" alt="EGR" />
+        <img src="../assets/img/logo.png" alt="EGR" />
         <div class="title">
           <b>Operations Control Centre</b>
           <span id="who">—</span>
@@ -21,7 +21,7 @@
       </a>
 
       <nav class="nav-links">
-        <a class="pill ghost" href="/">Public Board</a>
+        <a class="pill ghost" href="../index.html">Public Board</a>
         <a class="pill ghost" href="/staff/index.html">Staff</a>
         <a class="pill ghost" href="/instructors/index.html">Instructors</a>
         <button id="themeToggle" class="icon-btn" title="Toggle theme">Light</button>
@@ -29,6 +29,9 @@
       </nav>
     </div>
   </header>
+  <div class="announce-bar">
+    <div class="container inner">We are currently not operational. Check back soon!</div>
+  </div>
 
   <main class="page">
     <div class="container">
@@ -40,7 +43,7 @@
           <div class="filters" style="margin-top:0;">
             <button class="icon-btn" id="prevWeek" title="Previous week">‹</button>
             <div class="input" style="flex:2 1 260px;">
-              <span style="opacity:.75">📅</span>
+              <span style="opacity:.75"></span>
               <input id="weekLabel" readonly />
             </div>
             <button class="icon-btn" id="nextWeek" title="Next week">›</button>
@@ -64,18 +67,18 @@
           <div id="flightDetail" style="display:none;">
             <div class="grid-2" style="grid-template-columns:1fr;gap:10px;">
               <div class="input">
-                <span style="opacity:.75">✈️</span>
+                <span style="opacity:.75">✈</span>
                 <input id="fd_number" placeholder="Flight number" />
               </div>
 
               <div class="grid-2" style="gap:10px;">
-                <div class="input"><span style="opacity:.75">🛫</span><input id="fd_origin" placeholder="Origin (e.g., DXB)" /></div>
-                <div class="input"><span style="opacity:.75">🛬</span><input id="fd_destination" placeholder="Destination (e.g., LHR)" /></div>
+                <div class="input"><span style="opacity:.75"></span><input id="fd_origin" placeholder="Origin (e.g., DXB)" /></div>
+                <div class="input"><span style="opacity:.75"></span><input id="fd_destination" placeholder="Destination (e.g., LHR)" /></div>
               </div>
 
               <div class="grid-2" style="gap:10px;">
-                <div class="input"><span style="opacity:.75">⏱️</span><input id="fd_std" type="datetime-local" /></div>
-                <div class="input"><span style="opacity:.75">⏱️</span><input id="fd_sta" type="datetime-local" /></div>
+                <div class="input"><span style="opacity:.75">⏱</span><input id="fd_std" type="datetime-local" /></div>
+                <div class="input"><span style="opacity:.75">⏱</span><input id="fd_sta" type="datetime-local" /></div>
               </div>
 
               <div class="grid-2" style="gap:10px;">
@@ -112,7 +115,7 @@
                   </select>
                 </div>
                 <div class="input">
-                  <span style="opacity:.75">📌</span>
+                  <span style="opacity:.75"></span>
                   <input id="fd_note" placeholder="Status note (optional)" />
                 </div>
               </div>
@@ -175,6 +178,6 @@
     </div>
   </footer>
 
-  <script type="module" src="/assets/js/occDashboard.js"></script>
+  <script type="module" src="../assets/js/occDashboard.js"></script>
 </body>
 </html>
