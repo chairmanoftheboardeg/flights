@@ -1,6 +1,36 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { toast } from "./utils.js";
 
-export const SUPABASE_URL = "https://pxhdjwlquhkkwrcytpuc.supabase.co";
-export const SUPABASE_ANON_KEY = "YeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4aGRqd2xxdWhra3dyY3l0cHVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5NDg1NzksImV4cCI6MjA4NTUyNDU3OX0.QidPisPUGyhZF2dZl7xN5Ju9QQIjqU4HVwZTU8F2rLA";
+export function getSupabase(){
+  if(window.__supabase) return window.__supabase;
+  const cfg = window.EGR_CONFIG;
+  if(!cfg?.SUPABASE_URL || !cfg?.SUPABASE_ANON_KEY){
+    toast("Supabase config missing.", "bad");
+    throw new Error("Missing Supabase config");
+  }
+  // window.supabase is provided by CDN
+  window.__supabase = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  });
+  return window.__supabase;
+}
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+export async function getSession(){
+  const sb = getSupabase();
+  const { data, error } = await sb.auth.getSession();
+  if(error) throw error;
+  return data.session;
+}
+
+export async function requireAuth(){
+  const sb = getSupabase();
+  const { data, error } = await sb.auth.getSession();
+  if(error) throw error;
+  if(!data.session) window.location.href = "/login.html";
+  return data.session;
+}
+
+export async function signOut(){
+  const sb = getSupabase();
+  await sb.auth.signOut();
+  window.location.href = "/";
+}

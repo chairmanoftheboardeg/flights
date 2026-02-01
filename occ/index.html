@@ -1,113 +1,180 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>EGR Flights | OCC</title>
-  <link rel="icon" type="image/png" href="../assets/logo.png"/>
-  <link rel="stylesheet" href="../assets/styles.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OCC | EGR Flight Operations</title>
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/assets/js/config.js"></script>
 </head>
 <body>
+  <header class="navbar">
+    <div class="container inner">
+      <a class="brand" href="/occ/index.html">
+        <img src="/assets/img/logo.png" alt="EGR" />
+        <div class="title">
+          <b>Operations Control Centre</b>
+          <span id="who">—</span>
+        </div>
+      </a>
 
-<header class="nav">
-  <div class="container nav-inner">
-    <a class="brand" href="../index.html" aria-label="EGR Flights">
-      <img src="../assets/logo.png" alt="EGR Logo"/>
-      <div class="title">
-        <b>Emirates Group Roblox</b>
-        <span>OCC Dashboard</span>
-      </div>
-    </a>
+      <nav class="nav-links">
+        <a class="pill ghost" href="/">Public Board</a>
+        <a class="pill ghost" href="/staff/index.html">Staff</a>
+        <a class="pill ghost" href="/instructors/index.html">Instructors</a>
+        <button id="themeToggle" class="icon-btn" title="Toggle theme">Light</button>
+        <button id="signOutBtn" class="btn">Sign out</button>
+      </nav>
+    </div>
+  </header>
 
-    <nav class="nav-links" aria-label="Primary">
-      <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main Website</a>
-      <a href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noopener">Directory</a>
-      <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noopener">Careers</a>
-      <a href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noopener">Socials</a>
-      <a href="#" id="logoutLink">Logout</a>
-      <div class="pill" id="themeToggle" role="button" aria-label="Toggle theme">
-        <span class="dot"></span>
-        <span class="moon">☾</span>
-        <span class="label">Dark</span>
-      </div>
-    </nav>
-  </div>
-</header>
-
-
-<main>
-  <section class="hero">
+  <main class="page">
     <div class="container">
-      <div class="hero-card">
-        <div class="hero-left">
-          <div class="kicker"><span class="badge"></span><span>Operations Control Centre</span><span>•</span><span>Admin tools</span></div>
-          <h1>OCC module<br/>coming next.</h1>
-          <p>
-            This ZIP includes public board + staff dashboard wired to Supabase.
-            Next we can add: create/edit flights, roster assignment, locks, and audit views.
-          </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="../index.html">Public board</a>
-            <a class="btn" href="../staff/index.html">Staff view</a>
+      <div class="grid-2">
+        <section class="panel fade-in">
+          <h3>Flights</h3>
+          <p class="sub">Create, edit, cancel, and manage roster assignments.</p>
+
+          <div class="filters" style="margin-top:0;">
+            <button class="icon-btn" id="prevWeek" title="Previous week">‹</button>
+            <div class="input" style="flex:2 1 260px;">
+              <span style="opacity:.75">📅</span>
+              <input id="weekLabel" readonly />
+            </div>
+            <button class="icon-btn" id="nextWeek" title="Next week">›</button>
+            <button class="btn" id="goThisWeek">This week</button>
           </div>
-        </div>
-        <div class="hero-right">
-          <div class="statbox">
-            <div class="stat"><div><b>Planned</b><br/><span>Create / edit flights</span></div><span>🛠️</span></div>
-            <div class="sep"></div>
-            <div class="stat"><div><b>Planned</b><br/><span>Assign / lock roster</span></div><span>🧩</span></div>
-            <div class="sep"></div>
-            <div class="stat"><div><b>Planned</b><br/><span>Audit timeline</span></div><span>🗃️</span></div>
+
+          <div class="day-strip" id="dayStrip" style="margin-top:12px;"></div>
+
+          <div style="height:10px"></div>
+          <button class="btn primary" id="createFlightBtn">Create flight</button>
+
+          <div style="height:12px"></div>
+          <div id="flightList" class="cards"></div>
+          <div class="empty" id="flightEmpty" style="display:none;">No flights in this week.</div>
+        </section>
+
+        <section class="panel fade-in">
+          <h3>Flight Detail &amp; Roster</h3>
+          <p class="sub">Select a flight on the left to edit details and roster slots.</p>
+
+          <div id="flightDetail" style="display:none;">
+            <div class="grid-2" style="grid-template-columns:1fr;gap:10px;">
+              <div class="input">
+                <span style="opacity:.75">✈️</span>
+                <input id="fd_number" placeholder="Flight number" />
+              </div>
+
+              <div class="grid-2" style="gap:10px;">
+                <div class="input"><span style="opacity:.75">🛫</span><input id="fd_origin" placeholder="Origin (e.g., DXB)" /></div>
+                <div class="input"><span style="opacity:.75">🛬</span><input id="fd_destination" placeholder="Destination (e.g., LHR)" /></div>
+              </div>
+
+              <div class="grid-2" style="gap:10px;">
+                <div class="input"><span style="opacity:.75">⏱️</span><input id="fd_std" type="datetime-local" /></div>
+                <div class="input"><span style="opacity:.75">⏱️</span><input id="fd_sta" type="datetime-local" /></div>
+              </div>
+
+              <div class="grid-2" style="gap:10px;">
+                <div class="select">
+                  <select id="fd_stage">
+                    <option>Scheduled</option>
+                    <option>Check-in open</option>
+                    <option>Boarding</option>
+                    <option>Taxiing</option>
+                    <option>Takeoff</option>
+                    <option>In flight</option>
+                    <option>Descending</option>
+                    <option>Landing</option>
+                    <option>Deboarding</option>
+                    <option>Completed</option>
+                  </select>
+                </div>
+                <div class="select">
+                  <select id="fd_status">
+                    <option>On time</option>
+                    <option>Delayed</option>
+                    <option>Cancelled</option>
+                    <option>Rescheduled</option>
+                    <option>Gate change</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2" style="gap:10px;">
+                <div class="select">
+                  <select id="fd_visibility">
+                    <option value="public">Public</option>
+                    <option value="staff">Staff</option>
+                  </select>
+                </div>
+                <div class="input">
+                  <span style="opacity:.75">📌</span>
+                  <input id="fd_note" placeholder="Status note (optional)" />
+                </div>
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn primary" id="saveFlightBtn">Save changes</button>
+                <button class="btn" id="cancelFlightBtn">Cancel flight</button>
+              </div>
+            </div>
+
+            <div style="height:16px"></div>
+            <div class="section-title">
+              <h2>Roster slots</h2>
+              <span class="small" id="slotCount">—</span>
+            </div>
+
+            <div class="grid-2" style="grid-template-columns:1fr;gap:10px;margin-top:8px;">
+              <div class="grid-2" style="gap:10px;">
+                <div class="select">
+                  <select id="newSlotRole">
+                    <option>Captain</option>
+                    <option>First Officer</option>
+                    <option>Cabin Service Manager</option>
+                    <option>Cabin Crew</option>
+                    <option>Director of Ground Operations</option>
+                    <option>Ground Crew</option>
+                    <option>Guest Services Agent</option>
+                    <option>Flight Manager</option>
+                    <option>StandBy Staff</option>
+                  </select>
+                </div>
+                <button class="btn" id="addSlotBtn">Add slot</button>
+              </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Assigned</th>
+                    <th>Response</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="slotsBody"></tbody>
+              </table>
+              <div class="empty" id="slotsEmpty" style="display:none;">No roster slots yet.</div>
+            </div>
           </div>
-        </div>
+
+          <div class="empty" id="flightDetailEmpty">Select a flight to begin.</div>
+        </section>
       </div>
     </div>
-  </section>
-</main>
+  </main>
 
-
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <div>
-        <b>Emirates Group Roblox</b>
-        <div class="tiny">Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noopener">The Tyler Nicholas Group</a>.</div>
-      </div>
-      <div class="tiny">© <span id="year"></span> Emirates Group Roblox. All Rights Reserved.</div>
+  <footer class="footer">
+    <div class="container inner">
+      <span>Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noreferrer">The Tyler Nicholas Group</a></span>
+      <span>© <span id="year"></span> Emirates Group Roblox</span>
     </div>
-    <div class="hr"></div>
-    <div class="tiny">This platform is for internal scheduling and public flight board display. Access to staff areas is restricted to invited accounts.</div>
-  </div>
-</footer>
+  </footer>
 
-
-<script type="module">
-  import { initThemeToggle } from "../assets/theme.js";
-  import { supabase } from "../assets/supabase-client.js";
-  import { toast } from "../assets/shared.js";
-
-  initThemeToggle(document.getElementById("themeToggle"));
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  async function guard(){
-    const { data: { session } } = await supabase.auth.getSession();
-    if(!session) return window.location.href = "../login.html";
-    const { data: prof, error } = await supabase.from("profiles")
-      .select("is_occ, is_admin")
-      .eq("id", session.user.id)
-      .single();
-    if(error || !(prof?.is_occ || prof?.is_admin)) {
-      toast("OCC access required.");
-      window.location.href = "../staff/index.html";
-    }
-  }
-  document.getElementById("logoutLink").addEventListener("click", async (e)=>{
-    e.preventDefault();
-    await supabase.auth.signOut();
-    window.location.href = "../index.html";
-  });
-  guard();
-</script>
+  <script type="module" src="/assets/js/occDashboard.js"></script>
 </body>
 </html>
