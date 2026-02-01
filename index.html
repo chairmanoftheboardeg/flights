@@ -1,72 +1,340 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Flights | Emirates Group Roblox</title>
-  <link rel="stylesheet" href="assets/css/theme.css" />
-  <link rel="stylesheet" href="assets/css/board.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EGR Flights | Weekly Schedule</title>
+  <link rel="icon" type="image/png" href="./assets/logo.png"/>
+  <link rel="stylesheet" href="./assets/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 <body>
-  <!-- Top nav: keep your main-site vibe -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="logo"></div>
-        <div class="brand-text">
-          <div class="brand-name">Emirates Group Roblox</div>
-          <div class="brand-sub">Flight Operations Dashboard</div>
-        </div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="./index.html" aria-label="Emirates Group Roblox Flights">
+      <img src="./assets/logo.png" alt="EGR Logo"/>
+      <div class="title">
+        <b>Emirates Group Roblox</b>
+        <span>Flight Operations Board</span>
       </div>
+    </a>
 
-      <nav class="nav">
-        <a href="/">Flights</a>
-        <a href="/occ/index.html">OCC</a>
-        <a href="/staff/index.html">Staff</a>
-        <a href="/instructors/index.html">Instructors</a>
-      </nav>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main Website</a>
+      <a href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noopener">Directory</a>
+      <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noopener">Careers</a>
+      <a href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noopener">Socials</a>
+      <div class="pill" id="themeToggle" role="button" aria-label="Toggle theme">
+        <span class="dot"></span>
+        <span class="moon">☾</span>
+        <span class="label">Dark</span>
+      </div>
+    </nav>
+  </div>
+</header>
 
-      <div class="nav-actions">
-        <a class="pill" href="https://discord.com" target="_blank" rel="noreferrer">Discord</a>
-        <a class="pill ghost" href="/login.html">Sign in</a>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="kicker"><span class="badge"></span><span>Weekly Schedule</span><span>•</span><span id="weekLabel">Loading…</span></div>
+          <h1>Operational clarity,<br/>built for speed.</h1>
+          <p>
+            A modern OCC-style flight board for Emirates Group Roblox. Public visitors see published flights.
+            Staff access remains invite-only through authorised accounts.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#board">View Weekly Board</a>
+            <a class="btn ghost" href="./login.html">Staff Login</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="statbox" aria-label="Week stats">
+            <div class="stat"><div><b id="statFlights">—</b><br/><span>Flights this week</span></div><span>📋</span></div>
+            <div class="sep"></div>
+            <div class="stat"><div><b id="statToday">—</b><br/><span>Flights today</span></div><span>🕒</span></div>
+            <div class="sep"></div>
+            <div class="stat"><div><b id="statPublic">—</b><br/><span>Public flights</span></div><span>🌍</span></div>
+          </div>
+        </div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main class="page">
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="kicker">Weekly Schedule</div>
-        <h1>Live flights, roster visibility, and operational stages.</h1>
-        <p>View flights by day. OCC controls stages and status updates, synced across operations.</p>
+  <section class="section" id="board">
+    <div class="container">
+      <div class="section-title">
+        <div>
+          <h2>Weekly Schedule</h2>
+          <p class="sub">Navigate by day. Search by flight number or route. Smooth, fast, and very OCC.</p>
+        </div>
+        <div class="tiny" id="tzLabel"></div>
       </div>
-    </section>
 
-    <section class="board">
-      <div class="board-inner">
-        <!-- Week selector -->
-        <div class="weekbar">
-          <button class="weeknav" id="prevWeek" aria-label="Previous week">‹</button>
-          <div class="daychips" id="daychips"></div>
-          <button class="weeknav" id="nextWeek" aria-label="Next week">›</button>
+      <div class="weekbar">
+        <div class="weekbar-top">
+          <div class="left">
+            <div class="iconbtn" id="prevWeek" aria-label="Previous week">‹</div>
+            <div>
+              <b id="rangeLabel">—</b><br/>
+              <span id="rangeSub">—</span>
+            </div>
+            <div class="iconbtn" id="nextWeek" aria-label="Next week">›</div>
+          </div>
+          <div class="right">
+            <button class="btn" id="todayBtn">Go to this week</button>
+          </div>
         </div>
 
-        <div class="dayheader">
-          <div class="daytitle" id="dayTitle">Loading…</div>
-          <div class="daymeta" id="dayMeta"></div>
+        <div class="chips" id="dayChips" aria-label="Day selector"></div>
+
+        <div class="meta-row">
+          <div class="search">
+            <span style="opacity:.75">⌕</span>
+            <input id="searchBox" placeholder="Search flight number, origin, destination…" autocomplete="off"/>
+          </div>
+
+          <select class="select" id="statusFilter" aria-label="Filter">
+            <option value="all">All</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
         </div>
 
-        <!-- Flights list -->
-        <div class="cards" id="cards"></div>
-
-        <div class="empty" id="empty" hidden>
-          No flights scheduled for this day.
+        <div class="grid" id="cards"></div>
+        <div id="empty" class="empty" style="display:none; margin-top:14px;">
+          No flights match your filters for this day.
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
-  <script type="module" src="assets/js/board.js"></script>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div>
+        <b>Emirates Group Roblox</b>
+        <div class="tiny">Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noopener">The Tyler Nicholas Group</a>.</div>
+      </div>
+      <div class="tiny">© <span id="year"></span> Emirates Group Roblox. All Rights Reserved.</div>
+    </div>
+    <div class="hr"></div>
+    <div class="tiny">This platform is for internal scheduling and public flight board display. Access to staff areas is restricted to invited accounts.</div>
+  </div>
+</footer>
+
+
+<script type="module">
+  import { initThemeToggle } from "./assets/theme.js";
+  import { supabase } from "./assets/supabase-client.js";
+  import { fmtTime, fmtDate, dow, startOfWeek, addDays, durationHhMm, toast, revealOnScroll } from "./assets/shared.js";
+
+  initThemeToggle(document.getElementById("themeToggle"));
+  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById("tzLabel").textContent = "Timezone: " + Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const cardsEl = document.getElementById("cards");
+  const chipsEl = document.getElementById("dayChips");
+  const emptyEl = document.getElementById("empty");
+
+  const state = {
+    weekStart: startOfWeek(new Date()),
+    selectedDay: 0,
+    flights: [],
+    filtered: []
+  };
+
+  function stageGroup(stage){
+    const completed = new Set(["completed"]);
+    const active = new Set(["boarding","taxiing","takeoff","in_flight","descending","landing","deboarding","checkin_open"]);
+    if(completed.has(stage)) return "completed";
+    if(active.has(stage)) return "active";
+    return "upcoming";
+  }
+
+  function humanStage(s){
+    return String(s || "").replaceAll("_"," ");
+  }
+  function humanStatus(s){
+    return String(s || "").replaceAll("_"," ");
+  }
+
+  function weekLabels(){
+    const ws = state.weekStart;
+    const we = addDays(ws, 6);
+    const rangeLabel = `${fmtDate(ws)} – ${fmtDate(we)}`;
+    document.getElementById("rangeLabel").textContent = rangeLabel;
+    document.getElementById("rangeSub").textContent = "Public flights for the selected week";
+    document.getElementById("weekLabel").textContent = rangeLabel;
+  }
+
+  function buildChips(){
+    chipsEl.innerHTML = "";
+    const ws = state.weekStart;
+    const counts = Array(7).fill(0);
+    for(const f of state.flights){
+      const d = new Date(f.std);
+      const idx = Math.floor((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - new Date(ws.getFullYear(), ws.getMonth(), ws.getDate())) / (24*3600*1000));
+      if(idx >=0 && idx < 7) counts[idx] += 1;
+    }
+
+    for(let i=0;i<7;i++){
+      const d = addDays(ws, i);
+      const el = document.createElement("div");
+      el.className = "daychip" + (i===state.selectedDay ? " active" : "");
+      el.innerHTML = `
+        <div class="date">${fmtDate(d)}</div>
+        <div class="dow">${dow(d)}</div>
+        <div class="count">${counts[i]} flights</div>
+      `;
+      el.addEventListener("click", ()=>{ state.selectedDay = i; buildChips(); applyFilters(); });
+      chipsEl.appendChild(el);
+    }
+
+    // Stats
+    document.getElementById("statFlights").textContent = state.flights.length;
+    const today = new Date();
+    const todayIdx = Math.floor((new Date(today.getFullYear(), today.getMonth(), today.getDate()) - new Date(ws.getFullYear(), ws.getMonth(), ws.getDate())) / (24*3600*1000));
+    document.getElementById("statToday").textContent = (todayIdx>=0 && todayIdx<7) ? counts[todayIdx] : "0";
+    document.getElementById("statPublic").textContent = state.flights.length;
+  }
+
+  function card(f){
+    const std = fmtTime(f.std);
+    const sta = fmtTime(f.sta);
+    const dep = f.origin_name || f.origin_code;
+    const arr = f.destination_name || f.destination_code;
+    const dur = durationHhMm(f.std, f.sta);
+
+    const stage = humanStage(f.stage);
+    const status = humanStatus(f.status);
+    const note = (f.status_note || "").trim();
+
+    const kv = [];
+    if((f.terminal || "").trim()) kv.push(`Terminal: ${f.terminal}`);
+    if((f.gate || "").trim()) kv.push(`Gate: ${f.gate}`);
+    if(f.etd) kv.push(`ETD: ${fmtTime(f.etd)}`);
+    if(f.eta) kv.push(`ETA: ${fmtTime(f.eta)}`);
+
+    return `
+      <div class="card">
+        <div class="card-inner">
+          <div class="airline">
+            <div class="logo"><img src="./assets/logo.png" alt="EGR"/></div>
+            <div>
+              <b>${f.flight_number}</b>
+              <span>${f.airline_name || "Emirates Group Roblox"}</span>
+            </div>
+          </div>
+
+          <div class="map" role="group" aria-label="Route">
+            <div class="badges">
+              <div class="badge stage">${stage}</div>
+              <div class="badge status">${status}</div>
+            </div>
+            <div class="duration">${dur}</div>
+
+            <div class="route">
+              <div class="timeblock">
+                <div class="t">${std}</div>
+                <div class="place">${dep}</div>
+                <div class="label">Departure</div>
+              </div>
+
+              <div class="centerline" aria-hidden="true">
+                <div class="pin"></div>
+              </div>
+
+              <div class="timeblock" style="text-align:right">
+                <div class="t">${sta}</div>
+                <div class="place">${arr}</div>
+                <div class="label">Arrival</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <div class="kv">${kv.map(x=>`<span>${x}</span>`).join("")}</div>
+          <div style="margin-top:10px;">
+            ${note ? note : `<small>No operational note provided.</small>`}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function applyFilters(){
+    const ws = state.weekStart;
+    const dayStart = addDays(ws, state.selectedDay);
+    const dayEnd = addDays(dayStart, 1);
+    const q = (document.getElementById("searchBox").value || "").trim().toLowerCase();
+    const mode = document.getElementById("statusFilter").value;
+
+    const today = new Date();
+
+    let list = state.flights.filter(f => {
+      const t = new Date(f.std);
+      return t >= dayStart && t < dayEnd;
+    });
+
+    if(q){
+      list = list.filter(f => {
+        const hay = `${f.flight_number} ${f.origin_code} ${f.destination_code} ${f.origin_name||""} ${f.destination_name||""}`.toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    if(mode !== "all"){
+      list = list.filter(f => stageGroup(f.stage) === mode);
+    }
+
+    cardsEl.innerHTML = list.map(card).join("");
+    emptyEl.style.display = list.length ? "none" : "block";
+    revealOnScroll();
+  }
+
+  async function loadWeek(){
+    weekLabels();
+    const ws = state.weekStart;
+    const we = addDays(ws, 7);
+
+    const { data, error } = await supabase
+      .from("flights")
+      .select("id, visibility, flight_number, airline_name, origin_code, origin_name, destination_code, destination_name, std, sta, etd, eta, terminal, gate, stage, status, status_note")
+      .eq("visibility", "public")
+      .gte("std", ws.toISOString())
+      .lt("std", we.toISOString())
+      .order("std", { ascending: true });
+
+    if(error){
+      console.error(error);
+      toast("Could not load flights. Check Supabase config/RLS.");
+      state.flights = [];
+    } else {
+      state.flights = data || [];
+    }
+
+    buildChips();
+    applyFilters();
+  }
+
+  document.getElementById("prevWeek").addEventListener("click", ()=>{ state.weekStart = addDays(state.weekStart, -7); state.selectedDay = 0; loadWeek(); });
+  document.getElementById("nextWeek").addEventListener("click", ()=>{ state.weekStart = addDays(state.weekStart, 7); state.selectedDay = 0; loadWeek(); });
+  document.getElementById("todayBtn").addEventListener("click", ()=>{ state.weekStart = startOfWeek(new Date()); state.selectedDay = (new Date().getDay() + 6) % 7; loadWeek(); });
+  document.getElementById("searchBox").addEventListener("input", ()=> applyFilters());
+  document.getElementById("statusFilter").addEventListener("change", ()=> applyFilters());
+
+  // default: highlight today's chip
+  state.selectedDay = (new Date().getDay() + 6) % 7;
+  loadWeek();
+</script>
 </body>
 </html>

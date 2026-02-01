@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EGR Flights | Not Authorised</title>
+  <link rel="icon" type="image/png" href="./assets/logo.png"/>
+  <link rel="stylesheet" href="./assets/styles.css"/>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="./index.html" aria-label="Emirates Group Roblox Flights">
+      <img src="./assets/logo.png" alt="EGR Logo"/>
+      <div class="title">
+        <b>Emirates Group Roblox</b>
+        <span>Flight Operations Board</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main Website</a>
+      <a href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noopener">Directory</a>
+      <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noopener">Careers</a>
+      <a href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noopener">Socials</a>
+      <div class="pill" id="themeToggle" role="button" aria-label="Toggle theme">
+        <span class="dot"></span>
+        <span class="moon">☾</span>
+        <span class="label">Dark</span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="kicker"><span class="badge"></span><span>Access restricted</span></div>
+          <h1>Not authorised.</h1>
+          <p>
+            Your account exists, but it is not enabled for staff access on this platform.
+            Contact HR or an administrator to be approved.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="./index.html">Return to public board</a>
+            <a class="btn" href="./login.html">Back to login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div>
+        <b>Emirates Group Roblox</b>
+        <div class="tiny">Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noopener">The Tyler Nicholas Group</a>.</div>
+      </div>
+      <div class="tiny">© <span id="year"></span> Emirates Group Roblox. All Rights Reserved.</div>
+    </div>
+    <div class="hr"></div>
+    <div class="tiny">This platform is for internal scheduling and public flight board display. Access to staff areas is restricted to invited accounts.</div>
+  </div>
+</footer>
+
+<script type="module">
+  import { initThemeToggle } from "./assets/theme.js";
+  initThemeToggle(document.getElementById("themeToggle"));
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

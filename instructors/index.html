@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EGR Flights | Instructors</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png"/>
+  <link rel="stylesheet" href="../assets/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../index.html" aria-label="EGR Flights">
+      <img src="../assets/logo.png" alt="EGR Logo"/>
+      <div class="title">
+        <b>Emirates Group Roblox</b>
+        <span>Instructor Dashboard</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main Website</a>
+      <a href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noopener">Directory</a>
+      <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noopener">Careers</a>
+      <a href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noopener">Socials</a>
+      <a href="#" id="logoutLink">Logout</a>
+      <div class="pill" id="themeToggle" role="button" aria-label="Toggle theme">
+        <span class="dot"></span>
+        <span class="moon">☾</span>
+        <span class="label">Dark</span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="kicker"><span class="badge"></span><span>Instructor Console</span><span>•</span><span>Training queue</span></div>
+          <h1>Instructor module<br/>coming next.</h1>
+          <p>
+            Next we’ll add: claim requests, schedule sessions, mark complete, and instructor profile cards.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="../staff/index.html#training">My training area</a>
+            <a class="btn" href="../index.html">Public board</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="statbox">
+            <div class="stat"><div><b>Planned</b><br/><span>Claim requests</span></div><span>🧲</span></div>
+            <div class="sep"></div>
+            <div class="stat"><div><b>Planned</b><br/><span>Schedule sessions</span></div><span>📅</span></div>
+            <div class="sep"></div>
+            <div class="stat"><div><b>Planned</b><br/><span>Mark complete</span></div><span>✅</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div>
+        <b>Emirates Group Roblox</b>
+        <div class="tiny">Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noopener">The Tyler Nicholas Group</a>.</div>
+      </div>
+      <div class="tiny">© <span id="year"></span> Emirates Group Roblox. All Rights Reserved.</div>
+    </div>
+    <div class="hr"></div>
+    <div class="tiny">This platform is for internal scheduling and public flight board display. Access to staff areas is restricted to invited accounts.</div>
+  </div>
+</footer>
+
+
+<script type="module">
+  import { initThemeToggle } from "../assets/theme.js";
+  import { supabase } from "../assets/supabase-client.js";
+  import { toast } from "../assets/shared.js";
+
+  initThemeToggle(document.getElementById("themeToggle"));
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  async function guard(){
+    const { data: { session } } = await supabase.auth.getSession();
+    if(!session) return window.location.href = "../login.html";
+    const { data: prof, error } = await supabase.from("profiles")
+      .select("is_instructor, is_admin")
+      .eq("id", session.user.id)
+      .single();
+    if(error || !(prof?.is_instructor || prof?.is_admin)) {
+      toast("Instructor access required.");
+      window.location.href = "../staff/index.html";
+    }
+  }
+  document.getElementById("logoutLink").addEventListener("click", async (e)=>{
+    e.preventDefault();
+    await supabase.auth.signOut();
+    window.location.href = "../index.html";
+  });
+  guard();
+</script>
+</body>
+</html>

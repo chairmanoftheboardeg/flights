@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>EGR Flights | Staff Login</title>
+  <link rel="icon" type="image/png" href="./assets/logo.png"/>
+  <link rel="stylesheet" href="./assets/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="./index.html" aria-label="Emirates Group Roblox Flights">
+      <img src="./assets/logo.png" alt="EGR Logo"/>
+      <div class="title">
+        <b>Emirates Group Roblox</b>
+        <span>Flight Operations Board</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="https://emiratesgrouproblox.link" target="_blank" rel="noopener">Main Website</a>
+      <a href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noopener">Directory</a>
+      <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noopener">Careers</a>
+      <a href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noopener">Socials</a>
+      <div class="pill" id="themeToggle" role="button" aria-label="Toggle theme">
+        <span class="dot"></span>
+        <span class="moon">☾</span>
+        <span class="label">Dark</span>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-left">
+          <div class="kicker"><span class="badge"></span><span>Staff Access</span><span>•</span><span>Invite-only</span></div>
+          <h1>Sign in to your<br/>operations dashboard.</h1>
+          <p>
+            Accounts are created by EGR administration. If you do not have an account, contact HR.
+            Public sign-up is disabled.
+          </p>
+        </div>
+        <div class="hero-right">
+          <div class="statbox">
+            <div class="stat"><div><b>Secure</b><br/><span>Supabase Auth</span></div><span>🔒</span></div>
+            <div class="sep"></div>
+            <div class="stat"><div><b>Role routing</b><br/><span>Staff / Instructor / OCC</span></div><span>🧭</span></div>
+            <div class="sep"></div>
+            <div class="stat"><div><b>Audit-ready</b><br/><span>Operational logging</span></div><span>🗂️</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="authbox">
+        <div class="form">
+          <div class="field">
+            <label>Email</label>
+            <input id="email" type="email" placeholder="name@example.com" autocomplete="email"/>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input id="password" type="password" placeholder="••••••••" autocomplete="current-password"/>
+          </div>
+
+          <div class="row2">
+            <button class="btn primary" id="loginBtn">Sign in</button>
+            <button class="btn" id="resetBtn">Forgot password</button>
+          </div>
+
+          <div class="tiny" style="margin-top:12px; color: var(--muted);">
+            You will be routed automatically based on your permissions.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div>
+        <b>Emirates Group Roblox</b>
+        <div class="tiny">Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noopener">The Tyler Nicholas Group</a>.</div>
+      </div>
+      <div class="tiny">© <span id="year"></span> Emirates Group Roblox. All Rights Reserved.</div>
+    </div>
+    <div class="hr"></div>
+    <div class="tiny">This platform is for internal scheduling and public flight board display. Access to staff areas is restricted to invited accounts.</div>
+  </div>
+</footer>
+
+
+<script type="module">
+  import { initThemeToggle } from "./assets/theme.js";
+  import { supabase } from "./assets/supabase-client.js";
+  import { toast } from "./assets/shared.js";
+
+  initThemeToggle(document.getElementById("themeToggle"));
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  async function routeAfterLogin(){
+    const { data: { user } } = await supabase.auth.getUser();
+    if(!user) return;
+
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("id, display_name, is_staff, is_occ, is_instructor, is_admin")
+      .eq("id", user.id)
+      .single();
+
+    if(error || !profile){
+      console.error(error);
+      toast("Profile not found. Contact administration.");
+      return;
+    }
+
+    if(profile.is_admin || profile.is_occ) {
+      window.location.href = "./occ/index.html";
+      return;
+    }
+    if(profile.is_instructor) {
+      window.location.href = "./instructors/index.html";
+      return;
+    }
+    if(profile.is_staff) {
+      window.location.href = "./staff/index.html";
+      return;
+    }
+
+    window.location.href = "./not-authorised.html";
+  }
+
+  document.getElementById("loginBtn").addEventListener("click", async ()=>{
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    if(!email || !password) return toast("Enter email and password.");
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if(error) {
+      console.error(error);
+      toast(error.message || "Login failed.");
+      return;
+    }
+    toast("Signed in.");
+    routeAfterLogin();
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", async ()=>{
+    const email = document.getElementById("email").value.trim();
+    if(!email) return toast("Enter your email first.");
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/login.html"
+    });
+    if(error) {
+      console.error(error);
+      toast(error.message || "Could not send reset email.");
+      return;
+    }
+    toast("Password reset email sent.");
+  });
+
+  // If already logged in, route immediately
+  supabase.auth.getSession().then(({
+    data: { session }
+  }) => {
+    if(session) routeAfterLogin();
+  });
+</script>
+</body>
+</html>
