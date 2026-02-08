@@ -6,7 +6,6 @@ function fmtTime(iso){
 }
 function fmtDate(isoOrDate){
   if(!isoOrDate) return "—";
-  // supports YYYY-MM-DD
   if(/^\d{4}-\d{2}-\d{2}$/.test(isoOrDate)) return isoOrDate;
   const d = new Date(isoOrDate);
   if(Number.isNaN(d.getTime())) return "—";
@@ -28,4 +27,18 @@ function escapeHtml(str){
   return String(str ?? "").replace(/[&<>"']/g, (m)=>({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[m]));
+}
+function durationMinutes(depIso, arrIso){
+  const a = new Date(depIso);
+  const b = new Date(arrIso);
+  if(Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return null;
+  const mins = Math.max(0, Math.round((b - a)/60000));
+  return mins;
+}
+function fmtDuration(mins){
+  if(mins == null) return "—";
+  const h = Math.floor(mins/60);
+  const m = mins%60;
+  if(h <= 0) return `${m}m`;
+  return `${h}h ${String(m).padStart(2,"0")}m`;
 }

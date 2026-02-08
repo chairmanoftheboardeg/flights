@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flight Details | Emirates Group Roblox</title>
   <meta name="description" content="Flight details for Emirates Group Roblox public flight board."/>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml"/>
+  <link rel="icon" href="https://emiratesgrouproblox.link/images/logo.png"/>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
 </head>
 <body>
@@ -13,18 +13,21 @@
     <div class="container">
       <div class="nav">
         <a class="brand" href="./index.html" aria-label="Back to flight board">
-          <img src="./assets/img/logo.svg" alt="Emirates Group Roblox"/>
+          <img data-brand-logo src="https://emiratesgrouproblox.link/images/logo.png" alt="Emirates Group Roblox"/>
           <div class="title">
-            <b><span data-airline>Emirates Group Roblox</span></b>
+            <b><span data-brand-name>Emirates Group Roblox</span></b>
             <span>Flight Details</span>
           </div>
         </a>
 
         <div class="controls">
           <a class="btn" href="./index.html">← Back</a>
+          <a class="btn" href="https://booking.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Bookings</a>
+          <a class="btn" href="https://ekportal.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Staff</a>
+          <a class="btn" href="https://occ.emiratesgrouproblox.link" target="_blank" rel="noreferrer">OCC</a>
           <button class="pill" type="button" data-theme-toggle aria-label="Toggle theme">
-            <span class="dot" data-theme-dot></span>
-            <span data-theme-label>Dark</span>
+            <span class="dot"></span>
+            <span data-theme-label>Light</span>
           </button>
         </div>
       </div>
@@ -33,41 +36,64 @@
   </header>
 
   <main class="container">
-    <section class="hero" style="padding-top:24px;">
+    <section class="hero" style="padding-top:18px;">
       <div class="kicker">Public Flight Board</div>
       <h1 id="title">Loading…</h1>
-      <p class="lede" id="sub">—</p>
+      <div class="sub" id="sub">—</div>
+
+      <div class="spacer"></div>
 
       <div class="card" id="box">
         <div class="panel">
-          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
-            <div class="k"><div class="label">Flight</div><div class="value" id="f_flight">—</div></div>
-            <div class="k"><div class="label">Date</div><div class="value" id="f_date">—</div></div>
-            <div class="k"><div class="label">Status</div><div class="value"><span id="f_status" class="status neut"><span class="s-dot"></span>—</span></div></div>
+          <div class="flightcard" style="cursor:default;">
+            <div class="flightrow">
+              <div class="side">
+                <img class="logo" data-brand-logo src="https://emiratesgrouproblox.link/images/logo.png" alt="Emirates Group Roblox"/>
+                <div class="meta">
+                  <b id="f_flight">—</b>
+                  <span>Flight</span>
+                </div>
+              </div>
 
-            <div class="k"><div class="label">From</div><div class="value" id="f_from">—</div></div>
-            <div class="k"><div class="label">To</div><div class="value" id="f_to">—</div></div>
-            <div class="k"><div class="label">Gate / Terminal</div><div class="value"><span id="f_gate">—</span> / <span id="f_terminal">—</span></div></div>
+              <div class="mid">
+                <div class="route" style="width:100%;">
+                  <div class="airport">
+                    <div class="time" id="f_std">—</div>
+                    <div class="code"><span id="f_from">—</span> <span style="opacity:.65;">Departure</span></div>
+                  </div>
 
-            <div class="k"><div class="label">STD</div><div class="value" id="f_std">—</div></div>
-            <div class="k"><div class="label">STA</div><div class="value" id="f_sta">—</div></div>
-            <div class="k"><div class="label">Passenger Actions</div><div class="value" style="font-size:14px; font-weight:600;">
-              <a href="https://booking.emiratesgrouproblox.link" target="_blank" rel="noreferrer" class="btn primary">Book / Check-in</a>
-            </div></div>
+                  <div style="flex:1; padding:0 16px;">
+                    <div class="line" aria-hidden="true"></div>
+                  </div>
+
+                  <div class="airport" style="text-align:right;">
+                    <div class="time" id="f_sta">—</div>
+                    <div class="code"><span id="f_to">—</span> <span style="opacity:.65;">Arrival</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="right">
+                <div class="chip">Date: <b id="f_date">—</b></div>
+                <div id="f_status" class="status neut"><span class="s-dot"></span>—</div>
+                <div class="chip">Gate <b id="f_gate">—</b> • T<b id="f_terminal">—</b></div>
+              </div>
+            </div>
           </div>
 
           <div class="spacer"></div>
 
           <div class="notice">
-            This page is read-only. Crew and OCC tools are available via staff portals (login required).
+            Passenger actions (booking and online check-in) are available on
+            <a href="https://booking.emiratesgrouproblox.link" target="_blank" rel="noreferrer"><b>booking.emiratesgrouproblox.link</b></a>.
           </div>
         </div>
       </div>
-    </section>
 
-    <footer class="footer">
-      <div>© <span id="year"></span> Emirates Group Roblox.</div>
-    </footer>
+      <footer class="footer">
+        <div>© <span id="year"></span> Emirates Group Roblox.</div>
+      </footer>
+    </section>
   </main>
 
   <script>document.getElementById("year").textContent = new Date().getFullYear();</script>

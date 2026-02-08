@@ -1,4 +1,4 @@
-/* global EGR_CONFIG, fmtTime, fmtDate, statusClass, prettyStatus, escapeHtml */
+/* global EGR_CONFIG, fmtTime, fmtDate, statusClass, prettyStatus, escapeHtml, durationMinutes, fmtDuration */
 let supabaseClient = null;
 
 async function initSupabase(){
@@ -11,15 +11,10 @@ async function initSupabase(){
 
 async function rpcPublicFlight(flightId){
   const name = EGR_CONFIG.RPC_PUBLIC_FLIGHT;
-  // Try direct single-flight RPC if it exists
-  let res = await supabaseClient.rpc(name, { p_flight_id: flightId });
-  if(!res.error) return res;
-
-  // Fallback: load all and filter
-  const list = await supabaseClient.rpc(EGR_CONFIG.RPC_PUBLIC_FLIGHTS);
-  if(list.error) return list;
-  const found = (list.data || []).find(r => (r.flight_id || r.flightId) === flightId);
-  return { data: found ? [found] : [], error: null };
+  const param = EGR_CONFIG.RPC_PUBLIC_FLIGHT_ID_PARAM || "p_flight_id";
+  const args = {};
+  args[param] = flightId;
+  return await supabaseClient.rpc(name, args);
 }
 
 function renderFlight(r){
@@ -32,9 +27,10 @@ function renderFlight(r){
   const gate = r.gate || "—";
   const terminal = r.terminal || "—";
   const status = r.status || "UNKNOWN";
+  const mins = durationMinutes(r.sched_dep, r.sched_arr);
 
   document.querySelector("#title").textContent = `${flightNo} • ${from} → ${to}`;
-  document.querySelector("#sub").textContent = `${date} • STD ${std} • STA ${sta}`;
+  document.querySelector("#sub").textContent = `${date} • STD ${std} • STA ${sta} • ${fmtDuration(mins)}`;
 
   document.querySelector("#f_flight").textContent = flightNo;
   document.querySelector("#f_date").textContent = date;
@@ -51,7 +47,9 @@ function renderFlight(r){
 }
 
 window.addEventListener("DOMContentLoaded", async ()=>{
-  document.querySelector("[data-airline]").textContent = EGR_CONFIG.DEFAULT_AIRLINE_NAME;
+  document.querySelector("[data-brand-name]").textContent = EGR_CONFIG.BRAND_NAME;
+  document.querySelector("[data-brand-logo]").src = EGR_CONFIG.BRAND_LOGO_URL;
+
   await initSupabase();
 
   const qs = new URLSearchParams(window.location.search);
@@ -66,6 +64,7 @@ window.addEventListener("DOMContentLoaded", async ()=>{
     document.querySelector("#box").innerHTML = `
       <div class="notice">
         <b>Cannot load flight.</b><br/>
+        Your backend must expose <code>${escapeHtml(EGR_CONFIG.RPC_PUBLIC_FLIGHT)}</code>.<br/>
         Error: <code>${escapeHtml(error.message || String(error))}</code>
       </div>`;
     return;
