@@ -3,11 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EGR Flight Board | flights.emiratesgrouproblox.link</title>
+  <title>Maintenance | Emirates Group Roblox</title>
   <link rel="icon" href="assets/img/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/config.js"></script>
+  <style>
+    /* Adding a tiny bit of inline style to center the maintenance content */
+    .maintenance-content {
+      padding: 60px 0;
+      text-align: center;
+    }
+    .maintenance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .status-card {
+      background: var(--card-bg, rgba(255,255,255,0.05));
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.2s;
+    }
+    .status-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
 </head>
 <body>
   <header class="navbar">
@@ -22,86 +43,63 @@
 
       <nav class="nav-links">
         <a class="pill ghost" href="https://emiratesgrouproblox.link" target="_blank" rel="noreferrer">Main Website</a>
-        <a class="pill ghost" href="https://directory.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Directory</a>
         <a class="pill ghost" href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Careers</a>
-        <a class="pill ghost" href="https://emiratesgrouproblox.link/socials" target="_blank" rel="noreferrer">Socials</a>
-        <a class="pill primary" href="login.html"><span class="dot"></span>Staff Login</a>
-        <button id="themeToggle" class="icon-btn" title="Toggle theme">Light</button>
+        <a class="pill primary" href="https://tylernicholasgroup.com" target="_blank" rel="noreferrer">TNG Group</a>
       </nav>
     </div>
   </header>
+
   <div class="announce-bar">
-    <div class="container inner">We are currently not operational. Check back soon!</div>
+    <div class="container inner">System Alert: Our flight board is currently undergoing a scheduled renovation.</div>
   </div>
 
   <section class="hero">
     <div class="banner" aria-hidden="true">
       <img src="assets/banner/1.png" class="active" alt="" />
-      <img src="assets/banner/2.png" alt="" />
-      <img src="assets/banner/3.png" alt="" />
-      <img src="assets/banner/4.png" alt="" />
     </div>
     <div class="container content">
-      <h1>Weekly Flight Board</h1>
-      <p>Public flights for the selected week.</p>
+      <h1>Under Renovation</h1>
+      <p>We’re currently updating our flight systems to serve you better. We'll be back online shortly.</p>
     </div>
   </section>
 
-  <main class="board">
+  <main class="maintenance-content">
     <div class="container">
-      <div class="week-header fade-in">
-        <div class="week-row">
-          <div class="left">
-            <button class="icon-btn" id="prevWeek" title="Previous week">‹</button>
-            <div class="range">
-              <b id="weekRange">—</b>
-              <span id="weekSub">Select a day to view flights</span>
-            </div>
-            <button class="icon-btn" id="nextWeek" title="Next week">›</button>
-          </div>
-
-          <div class="week-actions">
-            <button class="btn" id="goThisWeek">Go to this week</button>
-          </div>
+      <h2>While you wait...</h2>
+      <p>Check out our other platforms to stay updated with the Emirates Group Roblox community.</p>
+      
+      <div class="maintenance-grid">
+        <div class="status-card">
+          <h3>Main Hub</h3>
+          <p>Visit our primary portal for group information and updates.</p>
+          <a class="pill ghost" href="https://emiratesgrouproblox.link">Visit Main Site</a>
         </div>
-
-        <div class="day-strip" id="dayStrip"></div>
-
-        <div class="filters">
-          <div class="input">
-            <span class="search-icon" aria-hidden="true"></span>
-            <input id="searchBox" placeholder="Search flight number, origin, destination…" />
-          </div>
-          <div class="select">
-            <select id="statusFilter">
-              <option value="all">All</option>
-              <option value="upcoming">Upcoming</option>
-              <option value="active">Active</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="delayed">Delayed</option>
-            </select>
-          </div>
+        
+        <div class="status-card">
+          <h3>Join the Team</h3>
+          <p>Explore open positions and start your aviation career with EGR.</p>
+          <a class="pill ghost" href="https://careers.emiratesgrouproblox.link">Careers Page</a>
+        </div>
+        
+        <div class="status-card">
+          <h3>Parent Group</h3>
+          <p>Learn more about the Tyler Nicholas Group ecosystem.</p>
+          <a class="pill ghost" href="https://tylernicholasgroup.com">TNG Website</a>
         </div>
       </div>
-
-      <div class="section-title fade-in">
-        <h2 id="selectedDayTitle">Flights</h2>
-        <span class="small" id="flightCount">—</span>
-      </div>
-
-      <div class="cards" id="cards"></div>
-      <div class="empty" id="emptyState" style="display:none;">No public flights found for this day.</div>
     </div>
   </main>
 
   <footer class="footer">
     <div class="container inner">
       <span>Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noreferrer">The Tyler Nicholas Group</a></span>
-      <span>© <span id="year"></span> Emirates Group Roblox</span>
+      <span>© 2026 Emirates Group Roblox</span>
     </div>
   </footer>
 
-  <script type="module" src="assets/js/publicBoard.js"></script>
+  <script>
+    // Simple script to handle the year in the footer if needed
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
