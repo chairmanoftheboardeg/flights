@@ -1,107 +1,179 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maintenance | Emirates Group Roblox</title>
-  <link rel="icon" href="assets/img/favicon.png" />
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <style>
-    /* Smoothing out the theme and removing image dependencies */
-    body {
-      background-color: #0f0f0f !important; /* Deep smooth dark */
-      background-image: none !important;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    
-    .hero {
-      background: none !important;
-      padding: 100px 0 60px 0 !important;
-      text-align: center;
-    }
-
-    .banner {
-      display: none !important; /* Removes background images */
-    }
-
-    .maintenance-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      text-align: center;
-      flex-grow: 1;
-    }
-
-    .links-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 40px;
-    }
-
-    .pill.large {
-      padding: 15px 30px;
-      font-size: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .pill.large:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: #ff0000; /* Subtle brand highlight */
-      transform: translateY(-2px);
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      letter-spacing: -1px;
-    }
-
-    p.subtitle {
-      color: #a0a0a0;
-      font-size: 1.2rem;
-    }
-
-    .navbar {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Public Flight Board | Emirates Group Roblox</title>
+  <meta name="description" content="Public Flight Board for Emirates Group Roblox. View schedules and live status updates."/>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"/>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
 </head>
 <body>
-  <header class="navbar">
-    <div class="container inner">
-      <a class="brand" href="#">
-        <img src="assets/img/logo.png" alt="EGR" />
-        <div class="title">
-          <b>Emirates Group Roblox</b>
-          <span>Flight Operations</span>
+  <header class="topbar">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="./index.html" aria-label="Home">
+          <img src="./assets/img/logo.svg" alt="Emirates Group Roblox"/>
+          <div class="title">
+            <b><span data-airline>Emirates Group Roblox</span></b>
+            <span>Public Flight Board</span>
+          </div>
+        </a>
+
+        <nav class="navlinks" aria-label="Primary">
+          <a href="https://emiratesgrouproblox.link" target="_blank" rel="noreferrer">Main Site</a>
+          <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Careers</a>
+          <a href="https://booking.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Book</a>
+        </nav>
+
+        <div class="controls">
+          <button class="pill" type="button" data-theme-toggle aria-label="Toggle theme">
+            <span class="dot" data-theme-dot></span>
+            <span data-theme-label>Dark</span>
+          </button>
         </div>
-      </a>
+      </div>
+
+      <div class="announcement">
+        <div class="announcement-inner">
+          <div style="display:flex; gap:12px; align-items:flex-start;">
+            <span class="badge">Announcement</span>
+            <div>
+              <h4>Vision 2026</h4>
+              <p>Operational updates, event schedules, and announcements are published through our official channels.</p>
+            </div>
+          </div>
+          <a class="btn" href="https://emiratesgrouproblox.link" target="_blank" rel="noreferrer">View Newsroom</a>
+        </div>
+      </div>
+      <div class="spacer"></div>
     </div>
   </header>
 
-  <main class="maintenance-container">
+  <main class="container">
     <section class="hero">
-      <h1>Under Renovation</h1>
-      <p class="subtitle">Our flight systems are being upgraded for a better experience.</p>
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Flight Operations</div>
+          <h1>Schedules, statuses, and live operational visibility.</h1>
+          <p class="lede">
+            This board is powered by a unified backend to keep flight information consistent across passengers, crew, and OCC.
+            Use filters to find flights quickly and open a flight for details.
+          </p>
+
+          <div class="controlsbar">
+            <input id="q" class="input" placeholder="Search flight, gate, terminal…" style="min-width:240px"/>
+            <input id="date" class="input" type="date" />
+            <input id="origin" class="input" placeholder="From (DXB)" style="width:130px" maxlength="3"/>
+            <input id="dest" class="input" placeholder="To (LHR)" style="width:130px" maxlength="3"/>
+            <select id="status" aria-label="Status filter">
+              <option value="">All statuses</option>
+              <option value="SCHEDULED">SCHEDULED</option>
+              <option value="CHECKIN_OPEN">CHECKIN_OPEN</option>
+              <option value="BOARDING">BOARDING</option>
+              <option value="DELAYED">DELAYED</option>
+              <option value="CANCELLED">CANCELLED</option>
+              <option value="LANDED">LANDED</option>
+            </select>
+            <button id="refresh" class="btn primary" type="button">Refresh</button>
+            <span class="chip">Last updated: <b id="lastUpdated">—</b></span>
+          </div>
+
+          <div class="spacer"></div>
+
+          <div class="card">
+            <div class="panel">
+              <h3>Flight Board</h3>
+              <div class="tablewrap">
+                <table aria-label="Flights table">
+                  <thead>
+                    <tr>
+                      <th>Flight</th>
+                      <th>Date</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>STD</th>
+                      <th>STA</th>
+                      <th>Status</th>
+                      <th>Gate</th>
+                      <th>Terminal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody">
+                    <tr><td colspan="9"><div class="notice">Loading flights…</div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="spacer"></div>
+              <div class="notice">
+                Tip: click a flight row to open flight details.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card">
+          <div class="panel">
+            <div class="kicker">Snapshot</div>
+            <h3 style="margin-top:0;">Operational Overview</h3>
+            <p class="lede" style="margin-bottom:12px;">
+              A quick view of what’s happening for your current filters.
+            </p>
+
+            <div class="kpi">
+              <div class="k"><div class="label">Total</div><div class="value" id="k_total">0</div></div>
+              <div class="k"><div class="label">Check-in Open</div><div class="value" id="k_checkin">0</div></div>
+              <div class="k"><div class="label">Boarding</div><div class="value" id="k_boarding">0</div></div>
+              <div class="k"><div class="label">Delayed</div><div class="value" id="k_delayed">0</div></div>
+              <div class="k"><div class="label">Cancelled</div><div class="value" id="k_cancelled">0</div></div>
+            </div>
+
+            <div class="spacer"></div>
+
+            <div class="notice">
+              Passenger actions (booking and online check-in) live on
+              <a href="https://booking.emiratesgrouproblox.link" target="_blank" rel="noreferrer"><b>booking.emiratesgrouproblox.link</b></a>.
+            </div>
+
+            <div class="spacer"></div>
+
+            <div class="notice">
+              Staff systems are protected behind login (Crew Portal + OCC).
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <div class="links-grid">
-      <a class="pill large ghost" href="https://emiratesgrouproblox.link">Main Website</a>
-      <a class="pill large ghost" href="https://careers.emiratesgrouproblox.link">Careers</a>
-      <a class="pill large ghost" href="https://tylernicholasgroup.com">Tyler Nicholas Group</a>
-    </div>
+    <footer class="footer">
+      <div class="container" style="padding:0;">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center;">
+          <div>© <span id="year"></span> Emirates Group Roblox. Owned & operated by The Tyler Nicholas Group.</div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="https://tylernicholasgroup.com" target="_blank" rel="noreferrer">Tyler Nicholas Group</a>
+            <a href="https://emiratesgrouproblox.link" target="_blank" rel="noreferrer">Main Site</a>
+            <a href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Careers</a>
+          </div>
+        </div>
+        <div style="margin-top:10px;">
+          <small>Disclaimer: Emirates Group Roblox is an independent virtual aviation organisation and is not affiliated with any real-world airline or Emirates Group entity.</small>
+        </div>
+      </div>
+    </footer>
   </main>
 
-  <footer class="footer">
-    <div class="container inner">
-      <span>Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank">The Tyler Nicholas Group</a></span>
-      <span>© 2026 Emirates Group Roblox</span>
-    </div>
-  </footer>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Supabase JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="./assets/js/config.js"></script>
+  <script src="./assets/js/theme.js"></script>
+  <script src="./assets/js/utils.js"></script>
+  <script src="./assets/js/app.js"></script>
 </body>
 </html>
