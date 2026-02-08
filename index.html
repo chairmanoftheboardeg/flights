@@ -7,99 +7,101 @@
   <link rel="icon" href="assets/img/favicon.png" />
   <link rel="stylesheet" href="assets/css/styles.css" />
   <style>
-    /* Adding a tiny bit of inline style to center the maintenance content */
-    .maintenance-content {
-      padding: 60px 0;
+    /* Smoothing out the theme and removing image dependencies */
+    body {
+      background-color: #0f0f0f !important; /* Deep smooth dark */
+      background-image: none !important;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .hero {
+      background: none !important;
+      padding: 100px 0 60px 0 !important;
       text-align: center;
     }
-    .maintenance-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+
+    .banner {
+      display: none !important; /* Removes background images */
+    }
+
+    .maintenance-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
       margin-top: 40px;
     }
-    .status-card {
-      background: var(--card-bg, rgba(255,255,255,0.05));
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: transform 0.2s;
+
+    .pill.large {
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
     }
-    .status-card:hover {
-      transform: translateY(-5px);
+
+    .pill.large:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #ff0000; /* Subtle brand highlight */
+      transform: translateY(-2px);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+
+    p.subtitle {
+      color: #a0a0a0;
+      font-size: 1.2rem;
+    }
+
+    .navbar {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
   </style>
 </head>
 <body>
   <header class="navbar">
     <div class="container inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="#">
         <img src="assets/img/logo.png" alt="EGR" />
         <div class="title">
           <b>Emirates Group Roblox</b>
           <span>Flight Operations</span>
         </div>
       </a>
-
-      <nav class="nav-links">
-        <a class="pill ghost" href="https://emiratesgrouproblox.link" target="_blank" rel="noreferrer">Main Website</a>
-        <a class="pill ghost" href="https://careers.emiratesgrouproblox.link" target="_blank" rel="noreferrer">Careers</a>
-        <a class="pill primary" href="https://tylernicholasgroup.com" target="_blank" rel="noreferrer">TNG Group</a>
-      </nav>
     </div>
   </header>
 
-  <div class="announce-bar">
-    <div class="container inner">System Alert: Our flight board is currently undergoing a scheduled renovation.</div>
-  </div>
-
-  <section class="hero">
-    <div class="banner" aria-hidden="true">
-      <img src="assets/banner/1.png" class="active" alt="" />
-    </div>
-    <div class="container content">
+  <main class="maintenance-container">
+    <section class="hero">
       <h1>Under Renovation</h1>
-      <p>We’re currently updating our flight systems to serve you better. We'll be back online shortly.</p>
-    </div>
-  </section>
+      <p class="subtitle">Our flight systems are being upgraded for a better experience.</p>
+    </section>
 
-  <main class="maintenance-content">
-    <div class="container">
-      <h2>While you wait...</h2>
-      <p>Check out our other platforms to stay updated with the Emirates Group Roblox community.</p>
-      
-      <div class="maintenance-grid">
-        <div class="status-card">
-          <h3>Main Hub</h3>
-          <p>Visit our primary portal for group information and updates.</p>
-          <a class="pill ghost" href="https://emiratesgrouproblox.link">Visit Main Site</a>
-        </div>
-        
-        <div class="status-card">
-          <h3>Join the Team</h3>
-          <p>Explore open positions and start your aviation career with EGR.</p>
-          <a class="pill ghost" href="https://careers.emiratesgrouproblox.link">Careers Page</a>
-        </div>
-        
-        <div class="status-card">
-          <h3>Parent Group</h3>
-          <p>Learn more about the Tyler Nicholas Group ecosystem.</p>
-          <a class="pill ghost" href="https://tylernicholasgroup.com">TNG Website</a>
-        </div>
-      </div>
+    <div class="links-grid">
+      <a class="pill large ghost" href="https://emiratesgrouproblox.link">Main Website</a>
+      <a class="pill large ghost" href="https://careers.emiratesgrouproblox.link">Careers</a>
+      <a class="pill large ghost" href="https://tylernicholasgroup.com">Tyler Nicholas Group</a>
     </div>
   </main>
 
   <footer class="footer">
     <div class="container inner">
-      <span>Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank" rel="noreferrer">The Tyler Nicholas Group</a></span>
+      <span>Owned &amp; Operated by <a href="https://tylernicholasgroup.com" target="_blank">The Tyler Nicholas Group</a></span>
       <span>© 2026 Emirates Group Roblox</span>
     </div>
   </footer>
-
-  <script>
-    // Simple script to handle the year in the footer if needed
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
